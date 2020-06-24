@@ -12,7 +12,6 @@ leilaoApp.use(cors({origin:true}));
 const leiloes = db.collection('leilao');
 leilaoApp.get('/', (req, res) => res.send('retornando leilao'));
 
-//termos padroes
 leilaoApp.get('/term', async (req, res) =>{
     try{
         let getTerms = await leiloes.doc('TermosPadroes').get().then(doc =>{
@@ -22,7 +21,8 @@ leilaoApp.get('/term', async (req, res) =>{
     }catch(err){
         res.status(400).send(err.message);
     }
-})
+});
+
 //puxando pelo Id
 leilaoApp.post('/getBidById', async (req, res) => {
     try {
@@ -46,10 +46,6 @@ leilaoApp.get('/getAllBid', async (req,res) => {
                     name: doc.data().name,
                     description: doc.data().description,
                     items: doc.data().items,
-                    local: doc.data().local,
-                    organizador: doc.data().organizador,
-                    mail: doc.data().mail,
-                    tel: doc.data().tel,
                     startsOn: doc.data().startsOn,
                     closedAt: doc.data().closedAt
                 });
@@ -70,16 +66,16 @@ leilaoApp.post('/createBid', async (req,res) =>{
             description: req.body.description,
             items: req.body.items,
             local: req.body.local,
-            tel: req.body.tel,
-            organizador: req.body.organizador,
-            mail: req.body.mail,
             startsOn: req.body.startsOn,
-            closedAt: req.body.closedAt
+            closedAt: req.body.closedAt,
+            organizer: req.body.organizer,
+            mail: req.body.mail,
+            phone: req.body.phone
+
         }
         await leiloes.add(newBid).then(doc => {
-            return res.status(200).send(`${doc.name} gravado com Sucesso! ID:${doc.id}`);
-        })
-        
+            return res.status(200).send(doc.id);
+        })   
     }
     catch(err){
         res.status(400).send(err.message);
@@ -94,15 +90,14 @@ leilaoApp.put('/updateBid', async (req, res) => {
             description: req.body.description,
             items: req.body.items,
             local: req.body.local,
-            tel: req.body.tel,
-            organizador: req.body.organizador,
-            mail: req.body.mail,
             startsOn: req.body.startsOn,
-            closedAt: req.body.closedAt
+            closedAt: req.body.closedAt,
+            organizer: req.body.organizer,
+            mail: req.body.mail,
+            phone: req.body.phone
         };
-        await leiloes.doc(id).update(bid).then(() => {
-            return res.status(200).send(`${req.body.name} atualizado com Sucesso!`);
-        })        
+        await leiloes.doc(id).update(bid);
+        res.status(200).send(`${req.body.name} atualizado com Sucesso!`);
     }
     catch(err){
         res.status(400).send(err.message);
@@ -112,13 +107,10 @@ leilaoApp.put('/updateBid', async (req, res) => {
 leilaoApp.delete('/deleteBid', async (req, res) =>{
     try{
         let id = req.body.id;
-        let query = await leiloes.doc(id).delete().then(() => {
-            return res.status(200).send(`Item com o id ${JSON.stringify(req.body.id)} apagado com Sucesso`);
-        })       
+        let query = await leiloes.doc(id).delete();
+        res.status(200).send(`Item com o id ${JSON.stringify(req.body.id)} apagado com Sucesso`);
     }
     catch(err){
         res.status(400).send(err.message);
     }
 });
-
-module.exports = leilaoApp;
