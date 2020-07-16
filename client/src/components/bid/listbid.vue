@@ -18,36 +18,24 @@
           </v-col>
         </v-row>
           <v-divider class="mx-12"/>
-        <v-row class="mt-6" justify="space-around">
+        <v-row  justify="space-around">
+          <!--CARTOES-->
           <v-card
           width="24%"
           :key="card.length"
           v-for="card in cards"
+          class="mt-9 mb-3"
           >
-            <v-img height="250px" src="https://cdn.vuetifyjs.com/images/cards/store.jpg" class="white--text align-end bold" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)">
+            <v-img height="200px" src="https://cdn.vuetifyjs.com/images/cards/store.jpg" class="white--text align-end bold" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)">
                 <v-card-title>{{card.Title}}</v-card-title>
-                <v-card-subtitle class="white--text">{{card.Description}}</v-card-subtitle>
             </v-img>
-              <v-row align="end">
-                <v-chip-group>
+              <v-row align="end" dense>
                   <v-col>
-                      <v-row align="center" dense>
-                        <v-col>
-                          <h4 class="font-weight-light">Data de Abertura: </h4>
-                          <v-spacer></v-spacer>
-                          <v-chip color="green" class="white--text subtitle">{{card.dataStart}}</v-chip>
-                        </v-col>
-                      </v-row>
-                      <v-row align="center" dense>
-                        <v-col>
-                          <h4 class="font-weight-regular">Data de Encerramento: </h4>
-                          <v-spacer></v-spacer>
-                          <v-chip color="red" class="white--text subtitle">{{card.dataEnd}}</v-chip>
-                        </v-col>
-                      </v-row>
-                    <v-card-subtitle rigth class="title">Lotes: {{card.Lote}}</v-card-subtitle>
+                    <v-card-title class="subtitle-2">{{card.Description}}</v-card-title>
+                    <v-card-subtitle>{{card.timeStart}} - {{card.Status}}</v-card-subtitle>
+                    <v-divider/>
+                    <v-card-subtitle class="title">Lotes: {{card.Lote}}</v-card-subtitle>
                   </v-col>
-                </v-chip-group>
               </v-row>
             </v-card>
         </v-row>
@@ -60,10 +48,11 @@ export default {
   data(){
     return{
       cards:[
-        {Title:'Titulo',Description:'adsadadsadsafgvd', dataStart:'12/07', dataEnd:'36/07', Lote:'24'},
-        {Title:'Titulo',Description:'Descriçao', dataStart:'12/07', dataEnd:'36/07', Lote:'24'},
-        {Title:'Titulo',Description:'Descriçao', dataStart:'12/07', dataEnd:'36/07', Lote:'24'},
-        {Title:'Titulo',Description:'Descriçao', dataStart:'12/07', dataEnd:'36/07', Lote:'24'}
+        {Title:'Titulo',Description:'adsadadsadsafgvd',timeStart:'19:00', Status:'finalizado', Lote:'24'},
+        {Title:'Titulo',Description:'dnasjndjkansjdnjksandjknasfnujdnfnsdjfdn',timeStart:'19:00', Status:'aberto', Lote:'24'},
+        {Title:'Titulo',Description:'dnasjndjkansjdnjksandjknasfnujdnfnsdjfdn',timeStart:'19:00', Status:'aguardo', Lote:'24'},
+        {Title:'Titulo',Description:'dnasjndjkansjdnjksandjknasfnujdnfnsdjfdn',timeStart:'19:00', Status:'finalizado', Lote:'24'},
+        {Title:'Titulo',Description:'dnasjndjkansjdnjksandjknasfnujdnfnsdjfdn',timeStart:'19:00', Status:'finalizado', Lote:'24'}
       ]
     }
   }
