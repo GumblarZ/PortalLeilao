@@ -27,14 +27,14 @@
           class="mt-9 mb-3"
           >
             <v-img height="200px" src="https://cdn.vuetifyjs.com/images/cards/store.jpg" class="white--text align-end bold" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)">
-                <v-card-title>{{card.Title}}</v-card-title>
+                <v-card-title>{{card.name}}</v-card-title>
             </v-img>
               <v-row align="end" dense>
                   <v-col>
-                    <v-card-title class="subtitle-2">{{card.Description}}</v-card-title>
-                    <v-card-subtitle>{{card.timeStart}} - {{card.Status}}</v-card-subtitle>
+                    <v-card-title class="subtitle-2">{{card.description}}</v-card-title>
+                    <v-card-subtitle>{{card.startsOn}} - {{card.closedAt}}</v-card-subtitle>
                     <v-divider/>
-                    <v-card-subtitle class="title">Lotes: {{card.Lote}}</v-card-subtitle>
+                    <v-card-subtitle class="title">Lotes: {{card.items}}</v-card-subtitle>
                   </v-col>
               </v-row>
             </v-card>
@@ -44,17 +44,35 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
+  
   data(){
     return{
-      cards:[
-        {Title:'Titulo',Description:'adsadadsadsafgvd',timeStart:'19:00', Status:'finalizado', Lote:'24'},
-        {Title:'Titulo',Description:'dnasjndjkansjdnjksandjknasfnujdnfnsdjfdn',timeStart:'19:00', Status:'aberto', Lote:'24'},
-        {Title:'Titulo',Description:'dnasjndjkansjdnjksandjknasfnujdnfnsdjfdn',timeStart:'19:00', Status:'aguardo', Lote:'24'},
-        {Title:'Titulo',Description:'dnasjndjkansjdnjksandjknasfnujdnfnsdjfdn',timeStart:'19:00', Status:'finalizado', Lote:'24'},
-        {Title:'Titulo',Description:'dnasjndjkansjdnjksandjknasfnujdnfnsdjfdn',timeStart:'19:00', Status:'finalizado', Lote:'24'}
-      ]
+      cards:[]
     }
+  },
+  methods:{
+      lote(item){
+        var lote = 0;
+       for(let i = 0; i < item.lenght; i++){
+         console.log(item[i]);
+         lote = i;
+       }
+       return lote 
+      }
+    },
+  created(){
+    axios({
+      method:'get',
+      url:'https://us-central1-portalleilao-26290.cloudfunctions.net/leilao/getAllBid'
+    }).then( doc =>{
+      
+        this.cards = doc.data;
+      
+      
+    }).catch(error => console.log(error))
   }
 }
+
 </script>
