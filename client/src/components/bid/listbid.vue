@@ -26,7 +26,7 @@
               <v-card-title class="subtitle-2">{{card.description}}</v-card-title>
               <v-card-subtitle>{{card.startsOn}} - {{card.closedAt}}</v-card-subtitle>
               <v-divider />
-              <v-card-subtitle class="title">Lotes: {{ lote(card.items) }}</v-card-subtitle>
+              <v-card-subtitle class="title">Lotes: {{ card.items }}</v-card-subtitle>
             </v-col>
           </v-row>
         </v-card>
@@ -44,11 +44,7 @@ export default {
     };
   },
   computed:{
-    lote(item){
-      item.forEach((x,count) => {
-         console.log(x, count);
-      });
-    }
+    
   },
   created() {
     axios({

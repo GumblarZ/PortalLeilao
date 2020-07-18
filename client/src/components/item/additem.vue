@@ -58,7 +58,7 @@
                         
                         <v-text-field 
                         class="col-md 2" 
-                        v-model="artigo.link"
+                        v-model="artigo.imgUrl"
                         label="Imagens"
                         disabled
                         />
@@ -96,6 +96,8 @@ import axios from 'axios'
 import firebase from 'firebase';
 import 'firebase/storage'
 import {VMoney} from "v-money";
+
+import { mapState } from 'vuex'
 export default {
   name: "app",
   data() {
@@ -109,18 +111,24 @@ export default {
           masked: false
         },
       categories:[],
-      artigo:{
+      /*artigo:{
         name:"teste",
         description:"",
         image:[],
         link:[],
         picker:"",
         initialbid:""
-      },
+      },*/
+      
       user:{
         uid:'JoseTestando'
       }
     }
+  },
+  computed: {
+    ...mapState({
+        artigo: state => state.item
+      })
   },
   
   directives: {money: VMoney},
@@ -131,42 +139,23 @@ export default {
   },
   methods: {
   async onUpload(){
-    this.artigo.link = []
-    let images = this.artigo.image;
-    images.forEach(image => {
-      firebase.storage()
-      .ref('items/' + this.user.uid + '/' + this.artigo.name + '/'+ image.name)
-      .put(image)
-      .then(snapshot => {
-        snapshot.ref.getDownloadURL().then(url => {
-        this.artigo.link.push(url)
-    })
-    })
+      this.artigo.link = []
+      let images = this.artigo.image;
+      images.forEach(image => {
+          firebase.storage()
+          .ref('items/' + this.user.uid + '/' + this.artigo.name + '/'+ image.name)
+          .put(image)
+          .then(snapshot => {
+              snapshot.ref.getDownloadURL().then(url => {
+                  this.artigo.imgUrl.push(url)
+              })
+          })
     })
  
       
   },
-    async addartigo() {
-      const artigo = {
-        name:this.artigo.name,
-        active:true,
-        description:this.artigo.description,
-        images:this.artigo.link,
-        initialbid:this.artigo.initialbid
-      }
-      const criaItem = firebase.firestore().collection('item');
-      await criaItem
-      .doc()
-      .set(artigo)
-      .then(doc => {
-        console.log(doc)
-        this.artigo.name="";
-        this.artigo.description="";
-        this.artigo.image=[];
-        this.artigo.link=[];
-        this.artigo.initialbid="";
-
-        })
+  addartigo() {
+   
       }
       
     }

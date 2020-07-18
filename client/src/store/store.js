@@ -8,7 +8,16 @@ export default new Vuex.Store({
   state: {
     user: null,
     loading: false,
-    error: null
+    error: null,
+    item:{
+      active: true,
+        category: "",
+        description: "",
+        imgUrl: [],
+        initialBid: 0,
+        name: "",
+        bids: []
+    }
   },
   mutations: {
     setUser(state, payload) {
@@ -77,9 +86,11 @@ export default new Vuex.Store({
 
     },
     getAllItem() {
-      firebase.firestore().collection('item').orderBy('name').get().then(doc => {
+      firebase.firestore().collection('item').orderBy('name').get().then(snapshot => {
         let ItemList = [];
-        ItemList.push(doc.data());
+        snapshot.forEach(doc =>{
+          ItemList.push(doc.data());
+        })        
         return ItemList;
       }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
