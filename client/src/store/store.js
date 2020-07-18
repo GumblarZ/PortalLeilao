@@ -6,7 +6,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: null,
+    user: {
+      uid:'Claudio'
+    },
     loading: false,
     error: null,
     item:{
