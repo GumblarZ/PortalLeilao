@@ -65,7 +65,7 @@
                 name="title"
                 label="Valor inicial para lance*"
                 id="title"
-                v-model="artigo.initialbid"
+                v-model="artigo.initialBid"
                 required
               />
             </v-flex>
@@ -73,10 +73,10 @@
 
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <v-btn class="col-12" color="primary" @click="addartigo(artigo)">Confirmar</v-btn>
+              <v-btn class="col-12" color="primary" @click="addartigo">Confirmar</v-btn>
             </v-flex>
           </v-layout>
-
+          {{this.$store.getters.user}}
           {{artigo}}
         </form>
       </v-flex>
@@ -140,20 +140,11 @@ export default {
           });
       });
     },
-    addartigo(artigo) {     
-      axios({
-        method: "post",
-        url: `https://us-central1-portalleilao-26290.cloudfunctions.net/item/createItem`,
-        data: {
-          category: artigo.category,
-          date: artigo.date,
-          description: artigo.description,
-          imgUrl: artigo.imgUrl,
-          initialBid: artigo.initialBid,
-          link: artigo.link,
-          name: artigo.name
-          }
-      }).then( alert("Criado com sucesso"));
+    async addartigo() {     
+    let item = firebase.firestore().collection('item');
+    await item.add(this.artigo)
+    .then(doc => console.log(doc))
+    .catch(error => console.log(error.message))
     }
   }
 };

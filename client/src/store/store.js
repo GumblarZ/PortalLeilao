@@ -6,9 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: {
-      uid:'Claudio'
-    },
+    user: {},
     loading: false,
     error: null,
     item:{
@@ -60,7 +58,6 @@ export default new Vuex.Store({
               uid: data.user.uid
             }
             commit('setUser', newUser)
-
           }
         )
         .catch(err => {
