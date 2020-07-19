@@ -51,7 +51,7 @@
                 counter
                 @change="onUpload"
                 prepend-icon="mdi-camera"
-                v-model="artigo.image"
+                v-model="image"
                 label="Insira a Imagem"
               />
 
@@ -103,6 +103,7 @@ export default {
         precision: 2,
         masked: false
       },
+      image: [],
       categories: []
     };
   },
@@ -124,8 +125,7 @@ export default {
   },
   methods: {
     async onUpload() {
-      this.artigo.link = [];
-      let images = this.artigo.image;
+      let images = this.image;
       images.forEach(image => {
         firebase
           .storage()
