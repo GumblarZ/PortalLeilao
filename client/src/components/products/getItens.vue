@@ -63,7 +63,7 @@
 
 <script>
 import Resp from './responsivo/ProdutoResponsivo';
-import axios from 'axios';
+import firebase from "firebase";
 export default {
     components:{
         Resp,
@@ -77,13 +77,15 @@ export default {
         }
     },
     created(){
-        axios({
-            method:'get',
-            url:'https://us-central1-portalleilao-26290.cloudfunctions.net/item/getAllItem'
-        }).then(doc => {
-            this.card = doc.data;
-        }).catch(error => console.log(error))     
-        
+        firebase.firestore().collection('item').orderBy('name').get().then(snapshot => {
+        let ItemList = [];
+        snapshot.forEach(doc =>{
+          ItemList.push(doc.data());
+        })        
+        return this.card = ItemList 
+      }).catch(err => {
+        alert('Aconteceu algo inesperado. ' + err.message);
+      });
     },
     methods:{
         status(status){

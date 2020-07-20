@@ -75,18 +75,6 @@ export default new Vuex.Store({
       });
 
     },
-    getAllItem() {
-      firebase.firestore().collection('item').orderBy('name').get().then(snapshot => {
-        let ItemList = [];
-        snapshot.forEach(doc =>{
-          ItemList.push(doc.data());
-        })        
-        return ItemList;
-      }).catch(err => {
-        alert('Aconteceu algo inesperado. ' + err.message);
-      });
-
-    },
     createItem(item) {
       const newItem = {
         active: true,
