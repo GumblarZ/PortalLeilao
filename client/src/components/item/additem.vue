@@ -54,7 +54,7 @@
                 v-model="image"
                 label="Insira a Imagem"
               />
-
+              <v-img width="100%" height="300" :src="artigo.imgUrl[1]"/>
               <v-text-field class="col-md 2" v-model="artigo.imgUrl" label="Imagens" disabled />
             </v-flex>
           </v-layout>
