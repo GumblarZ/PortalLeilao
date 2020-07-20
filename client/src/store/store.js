@@ -66,16 +66,6 @@ export default new Vuex.Store({
         })
     },
     // metodos copiados da API
-    getCategory() {
-      firebase.firestore().collection('item').doc('category').get().then(doc => {
-        let category = [];
-        category.push(category = doc.data().category);
-        return category;
-      }).catch(err => {
-        alert('Aconteceu algo inesperado. ' + err.message);
-      });
-
-    },
     getItemByID(itemID) {
       firebase.firestore().collection('item').doc(itemID).get().then(doc => {
         const item = doc.data();
