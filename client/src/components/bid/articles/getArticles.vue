@@ -77,7 +77,7 @@ export default {
 	data(){
 		return{		
 			// teste botao de abrir leilao
-			
+			targetItem: 'A5zfqb6in8HoIm99CMmt',
 			artigo: {},
 			vendedor: {
 				value: 5
@@ -86,7 +86,7 @@ export default {
 	},
 
 	created() {
-		firebase.firestore().collection('item').doc('A5zfqb6in8HoIm99CMmt').get().then(doc => {
+		firebase.firestore().collection('item').doc(this.targetItem).get().then(doc => {
         const item = doc.data();
         return this.artigo = item;
       }).catch(err => {
