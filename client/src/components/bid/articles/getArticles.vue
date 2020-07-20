@@ -69,7 +69,7 @@
 </template>
 <script>
 import lance from "./InputArticlesBid";
-import axios from 'axios';
+import firebase from 'firebase';
 export default {
 	components:{
 		lance
@@ -86,18 +86,13 @@ export default {
 	},
 
 	created() {
-		axios({
-			method:`post`,
-			url:'https://us-central1-portalleilao-26290.cloudfunctions.net/item/getItemById',
-			data:{id:'A5zfqb6in8HoIm99CMmt'},
-		})
-		.then(response => {
-				this.artigo = response.data
-			})
-		.catch(error => console.log(error));
-	},
-	
-	methods: {
-	}   
+		firebase.firestore().collection('item').doc('A5zfqb6in8HoIm99CMmt').get().then(doc => {
+        const item = doc.data();
+        return this.artigo = item;
+      }).catch(err => {
+        alert('Aconteceu algo inesperado. ' + err.message);
+      });
+	}
+  
 }
 </script>
