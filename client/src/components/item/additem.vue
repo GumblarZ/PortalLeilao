@@ -85,12 +85,11 @@
 </template>
 
 <script>
-import axios from "axios";
 import firebase from "firebase";
 import "firebase/storage";
 import { VMoney } from "v-money";
 
-import { mapState } from "vuex";
+import { mapState} from "vuex";
 export default {
   name: "app",
   data() {
@@ -110,18 +109,19 @@ export default {
   computed: {
     ...mapState({
       artigo: state => state.item,
-      user: state => state.user
+      user: state => state.user,
+      
     })
   },
 
   directives: { money: VMoney },
   created() {
-    axios
-      .get(
-        "https://us-central1-portalleilao-26290.cloudfunctions.net/item/category"
-      )
-      .then(response => (this.categories = response.data))
-      .catch(error => console.log(error));
+    firebase.firestore().collection('item').doc('category').get().then(doc => { 
+        this.categories.push(this.categories = doc.data().category);
+        return this.categories;
+      }).catch(err => {
+        alert('Aconteceu algo inesperado. ' + err.message);
+      });
   },
   methods: {
     async onUpload() {

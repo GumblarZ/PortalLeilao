@@ -9,6 +9,7 @@ export default new Vuex.Store({
     user: {},
     loading: false,
     error: null,
+    category:[],
     item:{
       active: true,
         category: "",
@@ -22,7 +23,7 @@ export default new Vuex.Store({
   mutations: {
     setUser(state, payload) {
       state.user = payload
-    }
+    },
   },
   actions: {
     async getCurrentUser({ commit }) {
