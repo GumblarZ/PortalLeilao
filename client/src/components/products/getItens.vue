@@ -63,7 +63,7 @@
 
 <script>
 import Resp from './responsivo/ProdutoResponsivo';
-import firebase from "firebase";
+import { mapState} from "vuex";
 export default {
     components:{
         Resp,
@@ -72,20 +72,16 @@ export default {
         return{
             pesquisar:null,
             page:1,
-            items:[],
-            card:[]
+            items:[],        
         }
     },
+    computed: {
+    ...mapState({
+      card: state => state.items
+    })
+  },
     created(){
-        firebase.firestore().collection('item').orderBy('name').get().then(snapshot => {
-        let ItemList = [];
-        snapshot.forEach(doc =>{
-          ItemList.push(doc.data());
-        })        
-        return this.card = ItemList 
-      }).catch(err => {
-        alert('Aconteceu algo inesperado. ' + err.message);
-      });
+        this.$store.dispatch('getAllItems', this.card);
     },
     methods:{
         status(status){

@@ -92,23 +92,12 @@
 <script>
 import firebase from "firebase";
 import "firebase/storage";
-import { VMoney } from "v-money";
-
 import { mapState} from "vuex";
 export default {
   name: "app",
   data() {
     return {
-      money: {
-        decimal: ",",
-        thousands: ".",
-        prefix: "R$ ",
-        suffix: " ",
-        precision: 2,
-        masked: false
-      },
       image: [],
-      
     };
   },
   computed: {
@@ -119,8 +108,6 @@ export default {
       
     })
   },
-
-  directives: { money: VMoney },
   created() {
     this.$store.dispatch('getcategories', this.categories);
   },

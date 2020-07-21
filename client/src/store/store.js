@@ -10,6 +10,7 @@ export default new Vuex.Store({
     loading: false,
     error: null,
     category:[],
+    items:[],
     item:{
       active: true,
         category: "",
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     },
     setCategories(state, payload){
       state.category = payload
+    },
+    setItems(state,payload){
+      state.items = payload
     }
   },
   actions: {
@@ -80,13 +84,23 @@ export default new Vuex.Store({
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
-
     getcategories({commit}){
       firebase.firestore().collection('item').doc('category').get().then(doc => { 
         let categories = [];
         categories.push(categories = doc.data().category);
         return commit('setCategories', categories);
       });  
+    },
+    getAllItems({commit}){
+      firebase.firestore().collection('item').orderBy('name').get().then(snapshot => {
+        let ItemList = [];
+        snapshot.forEach(doc =>{
+          ItemList.push(doc.data());
+        })        
+        return commit('setItems', ItemList);
+      }).catch(err => {
+        alert('Aconteceu algo inesperado. ' + err.message);
+      });
     }
     /*
     // metodos copiados da API
