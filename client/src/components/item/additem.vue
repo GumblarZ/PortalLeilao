@@ -54,7 +54,12 @@
                 v-model="image"
                 label="Insira a Imagem"
               />
-              <v-img width="100%" height="300" :src="artigo.imgUrl[1]"/>
+              <v-carousel>
+                <v-carousel-item
+                v-for="img in artigo.imgUrl"
+                :key="img"
+                :src="img"/>
+              </v-carousel>
               <v-text-field class="col-md 2" v-model="artigo.imgUrl" label="Imagens" disabled />
             </v-flex>
           </v-layout>
@@ -141,7 +146,7 @@ export default {
       });
     },
     addartigo() {     
-      this.$store.dispatch('createItem', this.item);
+      this.$store.dispatch('createItem', this.artigo);
     }
   }
 };
