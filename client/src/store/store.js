@@ -118,9 +118,73 @@ export default new Vuex.Store({
       }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
-    }
-    // 
+    },
+    // leilao retirado da api
+  
+  term(){
+    firebase.firestore().collection('leilao')
+    .doc('TermosPadroes').get().then(doc =>{
+      let terms = doc.data();
+      return res.status(200).send(terms);
+  }).catch(err => {
+    alert('Aconteceu algo inesperado. ' + err.message);
+  });
+  },
+  
+  //puxando pelo Id
 
+  getBidById(bidId){
+    firebase.firestore().collection('leilao').doc(bidId).then(doc =>{
+      return bid = doc.data();
+    }).catch(err => {
+      alert('Aconteceu algo inesperado. ' + err.message);
+    });
+  },
+
+  getAllbids(){
+    firebase.firestore().collection('leilao').get().then(snapshot =>{
+      let bids = [];
+      snapshot.forEach(doc =>{
+        bids.push({
+          name: doc.data().name,
+                      description: doc.data().description,
+                      items: doc.data().items,
+                      startsOn: doc.data().startsOn,
+                      closedAt: doc.data().closedAt
+        });
+      })
+      return bids;
+    }).catch(err => {
+      alert('Aconteceu algo inesperado. ' + err.message);
+    });
+  },
+  
+  //criando leilao
+ 
+  createBid(bid){
+    let newBid = {}
+    firebase.firestore().collection('leilao').add(newBid).then(doc =>{
+      return doc.name
+    }).catch(err => {
+      alert('Aconteceu algo inesperado. ' + err.message);
+    });
+  },
+  updateBid(bid){
+    firebase.firestore().collection('leilao').doc(bid.id).update(bid).then(doc => {
+      return alert(doc.name + " atualizado com sucesso");
+    }).catch(err => {
+      alert('Aconteceu algo inesperado. ' + err.message);
+    });
+  },
+  
+  deleteBid(bidID){
+    firebase.firestore().doc(bidId).delete().then(
+      alert("deletado com sucesso")
+    ).catch(err => {
+      alert('Aconteceu algo inesperado. ' + err.message);
+    });
+  }
+  
   },
   getters: {
     user(state) {
