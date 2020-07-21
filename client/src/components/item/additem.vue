@@ -140,11 +140,8 @@ export default {
           });
       });
     },
-    async addartigo() {     
-    let item = firebase.firestore().collection('item');
-    await item.add(this.artigo)
-    .then(doc => alert(doc.name +" registrado com Sucesso"))
-    .catch(error => console.log(error.message))
+    addartigo() {     
+      this.$store.dispatch('createItem', this.item);
     }
   }
 };

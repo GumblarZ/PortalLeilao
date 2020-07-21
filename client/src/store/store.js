@@ -24,6 +24,9 @@ export default new Vuex.Store({
     setUser(state, payload) {
       state.user = payload
     },
+    setItem(state,payload){
+      state.item = payload
+    }
   },
   actions: {
     async getCurrentUser({ commit }) {
@@ -67,6 +70,17 @@ export default new Vuex.Store({
         })
     },
     // metodos copiados da API
+    createItem({commit}, payload) {
+  
+      firebase.firestore().collection('item').add(payload).then(doc => {
+        commit('setItem', doc );
+        return alert(doc.id);
+      }).catch(err => {
+        alert('Aconteceu algo inesperado. ' + err.message);
+      });
+
+    },
+
     getItemByID(itemID) {
       firebase.firestore().collection('item').doc(itemID).get().then(doc => {
         const item = doc.data();
@@ -76,24 +90,7 @@ export default new Vuex.Store({
       });
 
     },
-    createItem(item) {
-      const newItem = {
-        active: true,
-        category: item.category,
-        description: item.description,
-        imgUrl: item.imgUrl,
-        initialBid: item.initialBid,
-        name: item.name,
-        bids: []
-      };
-
-      firebase.firestore().collection('item').add(newItem).then(doc => {
-        return doc.id;
-      }).catch(err => {
-        alert('Aconteceu algo inesperado. ' + err.message);
-      });
-
-    },
+    
     updateItem(item) {
       const id = item.id;
       const updateItem = {
@@ -125,12 +122,12 @@ export default new Vuex.Store({
     firebase.firestore().collection('leilao')
     .doc('TermosPadroes').get().then(doc =>{
       let terms = doc.data();
-      return res.status(200).send(terms);
+      return terms
   }).catch(err => {
     alert('Aconteceu algo inesperado. ' + err.message);
   });
   },
-  
+  /*
   //puxando pelo Id
 
   getBidById(bidId){
@@ -176,7 +173,7 @@ export default new Vuex.Store({
       alert('Aconteceu algo inesperado. ' + err.message);
     });
   },
-  
+
   deleteBid(bidID){
     firebase.firestore().doc(bidId).delete().then(
       alert("deletado com sucesso")
@@ -184,7 +181,7 @@ export default new Vuex.Store({
       alert('Aconteceu algo inesperado. ' + err.message);
     });
   }
-  
+  */
   },
   getters: {
     user(state) {
