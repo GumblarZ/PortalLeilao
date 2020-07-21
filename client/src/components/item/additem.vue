@@ -108,25 +108,21 @@ export default {
         masked: false
       },
       image: [],
-      categories: []
+      
     };
   },
   computed: {
     ...mapState({
       artigo: state => state.item,
       user: state => state.user,
+      categories: state => state.category
       
     })
   },
 
   directives: { money: VMoney },
   created() {
-    firebase.firestore().collection('item').doc('category').get().then(doc => { 
-        this.categories.push(this.categories = doc.data().category);
-        return this.categories;
-      }).catch(err => {
-        alert('Aconteceu algo inesperado. ' + err.message);
-      });
+    this.$store.dispatch('getcategories', this.categories);
   },
   methods: {
     async onUpload() {

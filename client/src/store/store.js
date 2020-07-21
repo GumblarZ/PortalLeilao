@@ -26,6 +26,9 @@ export default new Vuex.Store({
     },
     setItem(state,payload){
       state.item = payload
+    },
+    setCategories(state, payload){
+      state.category = payload
     }
   },
   actions: {
@@ -69,17 +72,24 @@ export default new Vuex.Store({
           alert('Aconteceu algo inesperado. ' + err.message)
         })
     },
-    // metodos copiados da API
-    createItem({commit}, payload) {
-  
+    createItem({commit}, payload) { 
       firebase.firestore().collection('item').add(payload).then(doc => {
         commit('setItem', doc );
         return alert(doc.id);
       }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
-
     },
+
+    getcategories({commit}){
+      firebase.firestore().collection('item').doc('category').get().then(doc => { 
+        let categories = [];
+        categories.push(categories = doc.data().category);
+        return commit('setCategories', categories);
+      });  
+    }
+    /*
+    // metodos copiados da API
 
     getItemByID(itemID) {
       firebase.firestore().collection('item').doc(itemID).get().then(doc => {
@@ -127,7 +137,7 @@ export default new Vuex.Store({
     alert('Aconteceu algo inesperado. ' + err.message);
   });
   },
-  /*
+  
   //puxando pelo Id
 
   getBidById(bidId){
