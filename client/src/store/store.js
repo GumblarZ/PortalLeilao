@@ -101,19 +101,20 @@ export default new Vuex.Store({
       }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
-    }
-    /*
-    // metodos copiados da API
-
-    getItemByID(itemID) {
-      firebase.firestore().collection('item').doc(itemID).get().then(doc => {
+    },
+    getItemByID({commit}) {
+      firebase.firestore().collection('item').doc('A5zfqb6in8HoIm99CMmt').get().then(doc => {
         const item = doc.data();
-        return item;
+        return commit('setItem', item)
       }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
 
     },
+    /*
+    // metodos copiados da API
+
+    
     
     updateItem(item) {
       const id = item.id;
