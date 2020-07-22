@@ -51,9 +51,20 @@
                                     class="pr-12 pl-12" 
                                     color="green">
                                         Ver Mais
-                                    </v-btn>                                  
+                                    </v-btn> 
+                                   
+                                    <v-btn 
+                                    outlined 
+                                    rounded 
+                                    class="pr-12 pl-12" 
+                                    color="red"
+                                    @click="deletar(card.id)"
+                                    >
+                                        deletar
+                                    </v-btn>  
+                                                                  
                                 </v-row>
-                            </v-list-item-content>
+                            </v-list-item-content>                            
                         </v-card>
                     </v-row>    
                 </v-col>
@@ -97,6 +108,10 @@ export default {
             }else{
                return "color:red" 
             }
+        },
+        deletar(id){
+            
+            this.$store.dispatch('deleteItem',id);
         }
     },
 }

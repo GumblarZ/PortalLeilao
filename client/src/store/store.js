@@ -12,7 +12,8 @@ export default new Vuex.Store({
     category:[],
     items:[],
     item:{
-      active: true,
+        id:"",
+        active: true,
         category: "",
         description: "",
         imgUrl: [],
@@ -76,14 +77,8 @@ export default new Vuex.Store({
           alert('Aconteceu algo inesperado. ' + err.message)
         })
     },
-    createItem({commit}, payload) { 
-      firebase.firestore().collection('item').add(payload).then(doc => {
-        commit('setItem', doc );
-        return alert(doc.id);
-      }).catch(err => {
-        alert('Aconteceu algo inesperado. ' + err.message);
-      });
-    },
+
+    //categorias
     getcategories({commit}){
       firebase.firestore().collection('item').doc('category').get().then(doc => { 
         let categories = [];
@@ -91,11 +86,22 @@ export default new Vuex.Store({
         return commit('setCategories', categories);
       });  
     },
+
+    //items
+    
     getAllItems({commit}){
       firebase.firestore().collection('item').orderBy('name').get().then(snapshot => {
         let ItemList = [];
         snapshot.forEach(doc =>{
-          ItemList.push(doc.data());
+          ItemList.push({
+            id:doc.id,
+            active: doc.data().active,
+            category: doc.data().category,
+            description: doc.data().description,
+            imgUrl: doc.data().imgUrl,
+            initialBid: doc.data().initialBid,
+            name: doc.data().name
+          });
         })        
         return commit('setItems', ItemList);
       }).catch(err => {
@@ -111,36 +117,37 @@ export default new Vuex.Store({
       });
 
     },
-    /*
-    // metodos copiados da API
-
-    
-    
-    updateItem(item) {
-      const id = item.id;
-      const updateItem = {
-        active: item.active,
-        category: item.category,
-        description: item.description,
-        imgUrl: item.imgUrl,
-        initialBid: item.initialBid,
-        name: item.name
-      };
-
-      firebase.firestore().collection('item').doc(id).update(updateItem).then(doc => {
+    createItem({commit}, payload) { 
+      firebase.firestore().collection('item').add(payload).then(doc => {
+        commit('setItem', doc );
+        return alert(doc.id);
+      }).catch(err => {
+        alert('Aconteceu algo inesperado. ' + err.message);
+      });
+    },
+    updateItem({commit}, payload) { 
+      firebase.firestore().collection('item').doc(payload.id).update(payload).then(doc => {
+        commit('setItem', doc );
         alert(doc.name + " alterado com sucesso");
       }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
-    deleteItem(itemId) {
-      const id = itemId;
-      firebase.firestore().collection('item').doc(id).delete().then(() => {
+    deleteItem(payload) {
+      console.log(payload);
+      firebase.firestore().collection('item').doc(payload.id).delete().then(() => {
         alert("Deletado com sucesso");
       }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
+    /*
+    // metodos copiados da API
+
+    
+    
+    
+    
     // leilao retirado da api
   
   term(){
