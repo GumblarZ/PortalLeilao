@@ -20,7 +20,8 @@ export default new Vuex.Store({
         initialBid: 0,
         name: "",
         bids: []
-    }
+    },
+    bids:[]
   },
   mutations: {
     setUser(state, payload) {
@@ -34,6 +35,9 @@ export default new Vuex.Store({
     },
     setItems(state,payload){
       state.items = payload
+    },
+    setAllBids(state,payload){
+      state.bids = payload
     }
   },
   actions: {
@@ -141,6 +145,25 @@ export default new Vuex.Store({
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
+
+    //bid 
+    getAllbids({commit}){
+      firebase.firestore().collection('leilao').get().then(snapshot =>{
+        let bidsList = [];
+        snapshot.forEach(doc =>{
+          bidsList.push({
+            name: doc.data().name,
+            description: doc.data().description,
+            items: doc.data().items,
+            startsOn: doc.data().startsOn,
+            closedAt: doc.data().closedAt
+          });
+        })
+        return commit('setAllBids', bidsList);
+      }).catch(err => {
+        alert('Aconteceu algo inesperado. ' + err.message);
+      });
+    },
     /*
     // metodos copiados da API
 
@@ -149,16 +172,16 @@ export default new Vuex.Store({
     
     
     // leilao retirado da api
-  
   term(){
-    firebase.firestore().collection('leilao')
-    .doc('TermosPadroes').get().then(doc =>{
-      let terms = doc.data();
-      return terms
-  }).catch(err => {
-    alert('Aconteceu algo inesperado. ' + err.message);
-  });
-  },
+      firebase.firestore().collection('leilao')
+      .doc('TermosPadroes').get().then(doc =>{
+        let terms = doc.data();
+        return terms
+    }).catch(err => {
+      alert('Aconteceu algo inesperado. ' + err.message);
+    });
+    },
+  
   
   //puxando pelo Id
 
