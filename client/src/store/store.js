@@ -143,6 +143,7 @@ export default new Vuex.Store({
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
+    //a testar
     updateItem({commit}, payload) { 
       firebase.firestore().collection('item').doc(payload.id).update(payload).then(doc => {
         commit('setItem', doc );
@@ -186,8 +187,28 @@ export default new Vuex.Store({
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
+    updateBid(payload){
+      firebase.firestore().collection('leilao').doc(payload.id).update(payload).then(doc => {
+        return alert(doc.name + " atualizado com sucesso");
+      }).catch(err => {
+        alert('Aconteceu algo inesperado. ' + err.message);
+      });
+    },
+    deleteBid(payload){
+      firebase.firestore().doc(payload.id).delete().then(
+        alert("deletado com sucesso")
+      ).catch(err => {
+        alert('Aconteceu algo inesperado. ' + err.message);
+      });
+    },
+    getBidById({commit},payload){
+      firebase.firestore().collection('leilao').doc(payload.id).then(doc =>{
+        return commit('setBid', doc);
+      }).catch(err => {
+        alert('Aconteceu algo inesperado. ' + err.message);
+      });
+    },
     /*
-    // metodos copiados da A
   term(){
       firebase.firestore().collection('leilao')
       .doc('TermosPadroes').get().then(doc =>{
@@ -197,33 +218,6 @@ export default new Vuex.Store({
       alert('Aconteceu algo inesperado. ' + err.message);
     });
     },
-  
-  
-  //puxando pelo Id
-
-  getBidById(bidId){
-    firebase.firestore().collection('leilao').doc(bidId).then(doc =>{
-      return bid = doc.data();
-    }).catch(err => {
-      alert('Aconteceu algo inesperado. ' + err.message);
-    });
-  },
-
-  updateBid(bid){
-    firebase.firestore().collection('leilao').doc(bid.id).update(bid).then(doc => {
-      return alert(doc.name + " atualizado com sucesso");
-    }).catch(err => {
-      alert('Aconteceu algo inesperado. ' + err.message);
-    });
-  },
-
-  deleteBid(bidID){
-    firebase.firestore().doc(bidId).delete().then(
-      alert("deletado com sucesso")
-    ).catch(err => {
-      alert('Aconteceu algo inesperado. ' + err.message);
-    });
-  }
   */
   },
   getters: {
