@@ -36,26 +36,15 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapState} from "vuex";
 export default {
-  data() {
-    return {
-      cards: []
-    };
-  },
   computed:{
-    
+    ...mapState({
+      cards: state => state.bids
+    })
   },
   created() {
-    axios({
-      method: "get",
-      url:
-        "https://us-central1-portalleilao-26290.cloudfunctions.net/leilao/getAllBid"
-    })
-      .then(doc => {
-        this.cards = doc.data;
-      })
-      .catch(error => console.log(error));
+    this.$store.dispatch('getAllBids', this.cards);
   }
 };
 </script>

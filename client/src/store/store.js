@@ -147,7 +147,7 @@ export default new Vuex.Store({
     },
 
     //bid 
-    getAllbids({commit}){
+    getAllBids({commit}){
       firebase.firestore().collection('leilao').get().then(snapshot =>{
         let bidsList = [];
         snapshot.forEach(doc =>{
