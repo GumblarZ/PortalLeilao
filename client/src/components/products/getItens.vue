@@ -110,7 +110,7 @@ export default {
             }
         },
         deletar(id){
-            
+            console.log(id);
             this.$store.dispatch('deleteItem',id);
         }
     },
