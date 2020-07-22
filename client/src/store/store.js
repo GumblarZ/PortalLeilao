@@ -44,7 +44,7 @@ export default new Vuex.Store({
     setCategories(state, payload){
       state.category = payload
     },
-    setItems(state,payload){
+    setAllItems(state,payload){
       state.items = payload
     },
     setAllBids(state,payload){
@@ -121,7 +121,7 @@ export default new Vuex.Store({
             name: doc.data().name
           });
         })        
-        return commit('setItems', ItemList);
+        return commit('setAllItems', ItemList);
       }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
@@ -167,9 +167,10 @@ export default new Vuex.Store({
         let bidsList = [];
         snapshot.forEach(doc =>{
           bidsList.push({
+            id: doc.id,
             name: doc.data().name,
             description: doc.data().description,
-            items: doc.data().items,
+            items: doc.data().items.length,
             startsOn: doc.data().startsOn,
             closedAt: doc.data().closedAt
           });
