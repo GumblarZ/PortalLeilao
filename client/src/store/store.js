@@ -21,7 +21,18 @@ export default new Vuex.Store({
         name: "",
         bids: []
     },
-    bids:[]
+    bids:[],
+    bid:{
+      name: "",
+      description: "",
+      items: "",
+      local: "",
+      startsOn: "",
+      closedAt: "",
+      organizer: "",
+      mail: "",
+      phone: ""
+    }
   },
   mutations: {
     setUser(state, payload) {
@@ -38,6 +49,9 @@ export default new Vuex.Store({
     },
     setAllBids(state,payload){
       state.bids = payload
+    },
+    setBid(state,payload){
+      state.bid = payload
     }
   },
   actions: {
@@ -164,14 +178,16 @@ export default new Vuex.Store({
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
+    createBid({commit},payload){
+      firebase.firestore().collection('leilao').add(payload).then(doc =>{
+        commit('setBid', doc );
+        return alert(doc.name + " criado com sucesso");
+      }).catch(err => {
+        alert('Aconteceu algo inesperado. ' + err.message);
+      });
+    },
     /*
-    // metodos copiados da API
-
-    
-    
-    
-    
-    // leilao retirado da api
+    // metodos copiados da A
   term(){
       firebase.firestore().collection('leilao')
       .doc('TermosPadroes').get().then(doc =>{
@@ -193,34 +209,6 @@ export default new Vuex.Store({
     });
   },
 
-  getAllbids(){
-    firebase.firestore().collection('leilao').get().then(snapshot =>{
-      let bids = [];
-      snapshot.forEach(doc =>{
-        bids.push({
-          name: doc.data().name,
-                      description: doc.data().description,
-                      items: doc.data().items,
-                      startsOn: doc.data().startsOn,
-                      closedAt: doc.data().closedAt
-        });
-      })
-      return bids;
-    }).catch(err => {
-      alert('Aconteceu algo inesperado. ' + err.message);
-    });
-  },
-  
-  //criando leilao
- 
-  createBid(bid){
-    let newBid = {}
-    firebase.firestore().collection('leilao').add(newBid).then(doc =>{
-      return doc.name
-    }).catch(err => {
-      alert('Aconteceu algo inesperado. ' + err.message);
-    });
-  },
   updateBid(bid){
     firebase.firestore().collection('leilao').doc(bid.id).update(bid).then(doc => {
       return alert(doc.name + " atualizado com sucesso");
