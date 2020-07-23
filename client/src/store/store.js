@@ -12,7 +12,6 @@ export default new Vuex.Store({
     category:[],
     items:[],
     item:{
-        id:"",
         active: true,
         category: "",
         description: "",
@@ -108,7 +107,7 @@ export default new Vuex.Store({
     //items
     
     getAllItems({commit}){
-      firebase.firestore().collection('item').orderBy('name').get().then(snapshot => {
+      firebase.firestore().collection('artigo').orderBy('name').get().then(snapshot => {
         let ItemList = [];
         snapshot.forEach(doc =>{
           ItemList.push({
@@ -127,7 +126,7 @@ export default new Vuex.Store({
       });
     },
     getItemByID({commit}) {
-      firebase.firestore().collection('item').doc('A5zfqb6in8HoIm99CMmt').get().then(doc => {
+      firebase.firestore().collection('artigo').doc('jfZ3P79A90YITUHbzP7N').get().then(doc => {
         const item = doc.data();
         return commit('setItem', item)
       }).catch(err => {
@@ -136,7 +135,7 @@ export default new Vuex.Store({
 
     },
     createItem({commit}, payload) { 
-      firebase.firestore().collection('item').add(payload).then(doc => {
+      firebase.firestore().collection('artigo').add(payload).then(doc => {
         commit('setItem', doc );
         return alert(doc.id);
       }).catch(err => {
@@ -145,7 +144,7 @@ export default new Vuex.Store({
     },
     //a testar
     updateItem({commit}, payload) { 
-      firebase.firestore().collection('item').doc(payload.id).update(payload).then(doc => {
+      firebase.firestore().collection('artigo').doc(payload.id).update(payload).then(doc => {
         commit('setItem', doc );
         alert(doc.name + " alterado com sucesso");
       }).catch(err => {
@@ -154,7 +153,7 @@ export default new Vuex.Store({
     },
     deleteItem(payload) {
       console.log(payload);
-      firebase.firestore().collection('item').doc(payload.id).delete().then(() => {
+      firebase.firestore().collection('artigo').doc(payload.id).delete().then(() => {
         alert("Deletado com sucesso");
       }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
