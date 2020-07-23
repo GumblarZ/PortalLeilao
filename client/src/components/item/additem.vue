@@ -106,13 +106,17 @@ export default {
       user: state => state.user,
       categories: state => state.category
       
-    })
+    }),
   },
   created() {
     this.$store.dispatch('getcategories', this.categories);
+    if(!this.user.refreshToken){
+      alert('logue porfavor')
+    }  
   },
   methods: {
     async onUpload() {
+      if(this.artigo.name){
       let images = this.image;
       images.forEach(image => {
         firebase
@@ -127,6 +131,9 @@ export default {
             });
           });
       });
+      }else{
+        alert('Porfavor defina o nome do artigo antes');
+      }
     },
     addartigo() {     
       this.$store.dispatch('createItem', this.artigo);
