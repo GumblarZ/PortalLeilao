@@ -11,6 +11,8 @@
                     <v-card max-width="30%" min-width="450" class="mb-12 pa-12"  :elevation="10" width="50%" >
                     <user titulo="Cadastre-se com..."
                     @email="getAccountData"
+                    :buttons="buttons"
+                    @clicked="clique"
                     />
                     </v-card>
                 </v-window-item>
@@ -18,7 +20,9 @@
                 <v-window-item :value="2">
                     <v-card max-width="30%" min-width="450" class="mb-12 pa-12"  :elevation="10" width="50%" >
                         <personal
-                        @data="getPersonalData"/>
+                        @data="getPersonalData"
+                        :buttons="dataButtons"
+                        @clicked="clique"/>
                     </v-card>
                 </v-window-item>
                 <!--fase 3-->
@@ -31,17 +35,7 @@
                 <v-row align="end" justify="center">
                     <v-card-actions>
                         <!--back to home-->
-                        <v-btn
-                        text
-                        large
-                        depressed
-                        color="#422321"
-                        to="/"
-                        v-if="step === 1"
-                        >
-                    
-                            voltar
-                        </v-btn>
+                       
                         <!--back to item-->
                         <v-btn
                         text
@@ -54,15 +48,6 @@
                         </v-btn>
                         <v-spacer/>
                         <!--next-->
-                        <v-btn
-                        color="#422321"
-                        class="white--text"
-                        depressed
-                        large
-                        v-if="step != 3"
-                        @click="clique()">
-                            Proximo
-                        </v-btn>
                         <!--next page-->
                         <v-btn
                         color="#422321"
@@ -84,17 +69,40 @@
 import user from '../components/Modal/criarUsuario/formEmailSenha';
 import personal from '../components/Modal/criarUsuario/cadastrarDadosPessoais';
 import Address from '../components/Modal/endereco'
-export default {
-    
+export default { 
     components:{
         user,
         personal,
         Address
     },
-    data() {
+    data(){
         return{
             personalData:{},
             accountData:{},
+            dataButtons:[
+                {
+                    text:"Voltar",
+                    click:'voltar',
+                    color:"#422321",
+                },  
+                {
+                    text:"Salvar",
+                    click:'dado',
+                    color:"#422321",
+                },  
+            ],
+            buttons:[
+                {
+                    text:"Voltar",
+                    click:'voltar',
+                    color:"#422321",
+                },
+                {
+                    text:"Criar",
+                    click:'signUp',
+                    color:"#422321",
+                }
+            ],
             step: 1,
             UF: ['SP', 'RJ', 'MG', 'PR', 'MN'],            
         }
@@ -107,19 +115,20 @@ export default {
         getPersonalData(personalData){
             this.personalData = personalData
         },
-        clique(){
-            if(this.step===2){
+        clique(botao){
+            if(this.step===2 && botao=="dado"){
                 this.step++
             }
-            if(this.step===1){
+            if(this.step===1 && botao=="signUp" ){
                 this.signUp().then(
                     this.step++             
                 )
             }
+
         },
         async signUp () {
             await this.$store.dispatch('signUserUp', this.accountData)
-    }
+        }
     }
 }
 </script>
