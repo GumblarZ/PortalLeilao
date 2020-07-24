@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
 export default {
     data() {
       return {
@@ -71,16 +72,20 @@ export default {
       }
     },
     computed:{
+      ...mapState({
+        user: state => state.user
+      }),
       menuItens() {
-        let menuItens = [
-          { i: '', title: 'Sair', link: '/' },
-            { i: '', title: 'Perfil', link: '/userpage'},
-        ]
-        if(this.userIsAuthenticated){
+        let menuItens 
+        if(this.user.email){
+          menuItens = [ 
+            { i: '', title: 'Sair', link: '/' },
+            { i: '', title: this.user.email, link: '/userpage'}             
+          ]
+        }else{
           menuItens = [
-            
             { i: '', title: 'cadastre-se', link: '/criar'},
-          { i: 'fas fa-arrow-right', title: 'Login', link: '/login'}
+            { i: 'fas fa-arrow-right', title: 'Login', link: '/login'}
           ]
         }
         return menuItens
