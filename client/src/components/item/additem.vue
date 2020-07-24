@@ -122,7 +122,7 @@ export default {
         firebase
           .storage()
           .ref(
-            "items/" + this.user.uid + "/" + this.artigo.name + "/" + image.name
+            "artigo/" + this.user.uid + "/" + this.artigo.name + "/" + image.name
           )
           .put(image)
           .then(snapshot => {
