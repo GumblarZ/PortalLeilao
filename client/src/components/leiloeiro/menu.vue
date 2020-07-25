@@ -43,11 +43,23 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default { 
   methods:{
     meunMudaPagina(page){
       this.$emit('pagina', page)
     }
+  },
+  computed: {
+    ...mapState({
+      user: state => state.user
+    }),
+  },
+  created(){
+    if(!this.user.refreshToken){
+      alert('logue porfavor');
+      this.$router.push('/')
+    }  
   },
   data:() =>({
     usuario: [{ name: "Lucas", email: "Lili@empresa.com" }],

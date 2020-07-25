@@ -111,7 +111,8 @@ export default {
   created() {
     this.$store.dispatch('getcategories', this.categories);
     if(!this.user.refreshToken){
-      alert('logue porfavor')
+      alert('logue porfavor');
+      this.$router.push('/')
     }  
   },
   methods: {
@@ -137,6 +138,7 @@ export default {
     },
     addartigo() {     
       this.$store.dispatch('createItem', this.artigo);
+      this.$router.push('/')
     }
   }
 };

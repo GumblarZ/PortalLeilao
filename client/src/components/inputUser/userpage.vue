@@ -209,7 +209,19 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
+  computed: {
+    ...mapState({
+      user: state => state.user
+    }),
+  },
+  created(){
+    if(!this.user.refreshToken){
+      alert('logue porfavor');
+      this.$router.push('/')
+    }  
+  },
   data() {
     return{
       
