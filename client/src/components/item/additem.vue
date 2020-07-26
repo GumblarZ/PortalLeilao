@@ -109,6 +109,7 @@ export default {
     }),
   },
   created() {
+    this.$store.commit('resetItem');
     this.$store.dispatch('getcategories', this.categories);
     if(!this.user.refreshToken){
       alert('Logue por favor');

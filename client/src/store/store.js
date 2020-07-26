@@ -37,6 +37,18 @@ export default new Vuex.Store({
     setUser(state, payload) {
       state.user = payload
     },
+    resetItem(state){
+      state.item = {
+          active: true,
+          category: "",
+          description: "",
+          imgUrl: [],
+          initialBid: 0,
+          name: "",
+          bids: []
+      }
+      
+    },
     setItem(state,payload){
       state.item = payload
     },
