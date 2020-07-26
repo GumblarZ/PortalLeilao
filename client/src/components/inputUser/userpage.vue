@@ -42,13 +42,13 @@
                     <!--FOTO DO USUARIO-->
                       <v-row justify="center"> 
                           <v-avatar color="#422321" size="280">
-                              <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
+                              <v-img :src="user.PhotoUrl"/>
                             </v-avatar>
                       </v-row>
                     <!--dados do usuario-->
                     <div class="mt-12">  
                       <v-text-field
-                          value="Joao Joao Joao"
+                          :value="user.displayname"
                           label="NOME COMPLETO :"
                         />
                         <v-text-field
@@ -57,18 +57,14 @@
                           disabled
                         />
                         <v-text-field
-                          value="Joaozinho@joao.com"
+                          :value="user.email"
                           label="EMAIL :"
                         />
                         <v-text-field
-                          value="24"
-                          label="IDADE :"
+                          :value="user.phoneNumber"
+                          label="TELEFONE :"
                         />
-                        <v-text-field
-                          value="*************"
-                          label="SENHA :"
-                          disabled
-                        />
+                       
                         <v-row justify="center">
                           <v-btn outlined color="#422321" >Alterar senha</v-btn>
                         </v-row> 

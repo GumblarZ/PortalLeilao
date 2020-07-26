@@ -8,8 +8,8 @@
                 <v-img src="https://cdn.shopify.com/s/files/1/0946/5368/products/alho_grande.jpg?v=1440442906"/>
               </v-list-item-avatar>
               <v-list>
-                <v-list-item-title class="title">{{usuario.name}}</v-list-item-title>
-                <v-list-item-subtitle class="title">{{usuario.email}}</v-list-item-subtitle>
+                <v-list-item-title class="title">{{user.name}}</v-list-item-title>
+                <v-list-item-subtitle class="title">{{user.email}}</v-list-item-subtitle>
               </v-list>
             </v-list-item>
           </v-list>
@@ -62,7 +62,7 @@ export default {
     }  
   },
   data:() =>({
-    usuario: [{ name: "Lucas", email: "Lili@empresa.com" }],
+    usuario:[],
     conteudos:[
       //numero 1
       {icon:"mdi-home",
