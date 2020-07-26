@@ -111,7 +111,7 @@ export default {
   created() {
     this.$store.dispatch('getcategories', this.categories);
     if(!this.user.refreshToken){
-      alert('logue porfavor');
+      alert('Logue por favor');
       this.$router.push('/')
     }  
   },

@@ -86,8 +86,7 @@ export default new Vuex.Store({
               refreshToken: data.user.refreshToken,
               uid: data.user.uid
             }
-            commit('setUser', newUser)
-            alert('Logado ' + data.user.email);
+            commit('setUser', newUser);
           }
         )
         .catch(err => {

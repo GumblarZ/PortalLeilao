@@ -218,7 +218,7 @@ export default {
   },
   created(){
     if(!this.user.refreshToken){
-      alert('logue porfavor');
+      alert('Logue por favor');
       this.$router.push('/')
     }  
   },
