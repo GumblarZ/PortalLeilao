@@ -13,17 +13,7 @@ export default new Vuex.Store({
     items:[],
     item:{},
     bids:[],
-    bid:{
-      name: "",
-      description: "",
-      items: "",
-      local: "",
-      startsOn: "",
-      closedAt: "",
-      organizer: "",
-      mail: "",
-      phone: ""
-    }
+    bid:{}
   },
   mutations: {
     setUser(state, payload) {
@@ -39,7 +29,6 @@ export default new Vuex.Store({
           name: "",
           bids: []
       }
-      
     },
     setItem(state,payload){
       state.item = payload
@@ -55,6 +44,19 @@ export default new Vuex.Store({
     },
     setBid(state,payload){
       state.bid = payload
+    },
+    resetBid(state){
+      state.bid = {
+        name: "",
+        description: "",
+        items: [],
+        local: "",
+        startsOn: "",
+        closedAt: "",
+        organizer: "",
+        mail: "",
+        phone: ""
+      }
     }
   },
   actions: {

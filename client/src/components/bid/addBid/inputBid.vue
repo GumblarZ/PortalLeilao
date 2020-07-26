@@ -14,7 +14,7 @@
         <form>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <v-text-field name="title" label="Nome do leilao*" v-model="leilao.nome" />
+              <v-text-field name="title" label="Nome do leilao*" v-model="leilao.name" />
             </v-flex>
           </v-layout>
           <v-layout row>
@@ -24,18 +24,18 @@
           </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <v-textarea name="title" label="Descricao do Leilao*" v-model="leilao.descricao" />
+              <v-textarea name="title" label="Descricao do Leilao*" v-model="leilao.description" />
             </v-flex>
           </v-layout>
           <v-layout row style="margin-top: 30px;">
             <v-flex xs12 sm3 offset-sm3>
               <h4 class="brown--text">Data de abertura</h4>
-              <v-date-picker color="#422321" class="col-12" v-model="leilao.abertura" />
+              <v-date-picker color="#422321" class="col-12" v-model="leilao.startsOn" />
             </v-flex>
 
             <v-flex xs12 sm3>
               <h4 class="brown--text">Data de fechamento</h4>
-              <v-date-picker color="#422321" class="col-12" v-model="leilao.fechamento" />
+              <v-date-picker color="#422321" class="col-12" v-model="leilao.closedAt" />
             </v-flex>
           </v-layout>
 
@@ -50,8 +50,7 @@
                 color="success"
                 v-on:click="addLeilao(leilao,leiloeiro,termos);"
               >Confirmar</v-btn>
-
-              {{registro}}
+              {{leilao}}
             </v-flex>
           </v-layout>
         </form>
@@ -71,36 +70,32 @@ export default {
   },
   data() {
     return {
-      leilao: {
-        nome: "carro",
-        local: "r lavradinho",
-        descricao: "carros loucos",
-        abertura: "",
-        fechamento: "",
-      },
       leiloeiro: {},
       termos: {},
-      registro: [],
     };
   },
   computed: {
     ...mapState({
-      user: state => state.user
+      user: state => state.user,
+      leilao: state => state.bid
     }),
   },
   created() {
+    this.$store.commit('resetBid');
     if (!this.user.refreshToken) {
       alert("Logue por favor");
       this.$router.push("/");
     }
   },
   methods: {
-    addLeilao(bid, auctioneer, term) {
-      const obj = { bid, auctioneer, term };
-      this.registro.push(obj);
+    addLeilao(bid) {
+      this.$store.dispatch('createBid', bid);
+      this.$router.push("/")
     },
     getLeiloeiro(leiloeiro) {
-      this.leiloeiro = leiloeiro;
+      this.leilao.organizer = leiloeiro.displayname;
+      this.leilao.mail = leiloeiro.email;
+      this.leilao.phone = leiloeiro.phoneNumber;
     },
     getTermos(termos) {
       this.termos = termos;
