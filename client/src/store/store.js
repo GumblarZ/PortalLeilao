@@ -11,15 +11,7 @@ export default new Vuex.Store({
     error: null,
     category:[],
     items:[],
-    item:{
-        active: true,
-        category: "",
-        description: "",
-        imgUrl: [],
-        initialBid: 0,
-        name: "",
-        bids: []
-    },
+    item:{},
     bids:[],
     bid:{
       name: "",
