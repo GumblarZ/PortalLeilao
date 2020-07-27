@@ -67,21 +67,15 @@ const user = {
     }
   }
 }
-Vue.use(Vuex)
 
-export default new Vuex.Store({
-  modules:{
-    userApp: user,
-  },
-  state: {   
-    category:[],
+
+//modulo item
+const item = {
+  state:{
     items:[],
     item:{},
-    bids:[],
-    bid:{}
   },
-  mutations: {
-    
+  mutations:{
     resetItem(state){
       state.item = {
           active: true,
@@ -96,46 +90,11 @@ export default new Vuex.Store({
     setItem(state,payload){
       state.item = payload
     },
-    setCategories(state, payload){
-      state.category = payload
-    },
     setAllItems(state,payload){
       state.items = payload
     },
-    setAllBids(state,payload){
-      state.bids = payload
-    },
-    setBid(state,payload){
-      state.bid = payload
-    },
-    resetBid(state){
-      state.bid = {
-        name: "",
-        description: "",
-        items: [],
-        local: "",
-        startsOn: "",
-        closedAt: "",
-        organizer: "",
-        mail: "",
-        phone: ""
-      }
-    }
   },
-  actions: {
-    
-
-    //categorias
-    getcategories({commit}){
-      firebase.firestore().collection('item').doc('category').get().then(doc => { 
-        let categories = [];
-        categories.push(categories = doc.data().category);
-        return commit('setCategories', categories);
-      });  
-    },
-
-    //items
-    
+  actions:{
     getAllItems({commit}){
       firebase.firestore().collection('artigo').orderBy('name').get().then(snapshot => {
         let ItemList = [];
@@ -189,8 +148,38 @@ export default new Vuex.Store({
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
+  },
+  getters:{}
+}
 
-    //bid 
+//leilao
+const bid = {
+  state:{
+    bids:[],
+    bid:{}
+  },
+  mutations:{
+    setAllBids(state,payload){
+      state.bids = payload
+    },
+    setBid(state,payload){
+      state.bid = payload
+    },
+    resetBid(state){
+      state.bid = {
+        name: "",
+        description: "",
+        items: [],
+        local: "",
+        startsOn: "",
+        closedAt: "",
+        organizer: "",
+        mail: "",
+        phone: ""
+      }
+    }
+  },
+  actions:{
     getAllBids({commit}){
       firebase.firestore().collection('leilao').get().then(snapshot =>{
         let bidsList = [];
@@ -237,18 +226,40 @@ export default new Vuex.Store({
       }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
-    },
-    /*
-  term(){
-      firebase.firestore().collection('leilao')
-      .doc('TermosPadroes').get().then(doc =>{
-        let terms = doc.data();
-        return terms
-    }).catch(err => {
-      alert('Aconteceu algo inesperado. ' + err.message);
-    });
-    },
-  */
+    }
+  }
+}
+
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+  modules:{
+    userApp: user,
+    itemApp: item,
+    bidApp: bid  
+  },
+  state: {   
+    category:[], 
+  },
+  mutations: {
+    setCategories(state, payload){
+      state.category = payload
+    }
+    
+    
+  },
+  actions: {
+    
+
+    //categorias
+    getcategories({commit}){
+      firebase.firestore().collection('item').doc('category').get().then(doc => { 
+        let categories = [];
+        categories.push(categories = doc.data().category);
+        return commit('setCategories', categories);
+      });  
+    }
   },
   getters: {
     

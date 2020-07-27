@@ -88,7 +88,7 @@ export default {
     },
     computed: {
     ...mapState({
-      card: state => state.items
+      card: state => state.itemApp.items
     })
   },
     created(){
