@@ -103,7 +103,7 @@ export default {
   computed: {
     ...mapState({
       artigo: state => state.item,
-      user: state => state.user,
+      user: state => state.userApp.user,
       categories: state => state.category
       
     }),
