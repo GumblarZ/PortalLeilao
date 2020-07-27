@@ -84,7 +84,7 @@ export default {
 		};
 	},computed: {
 		...mapState({
-			artigo: state => state.item,
+			artigo: state => state.itemApp.item,
 		})
 	},
 	created() {
