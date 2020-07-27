@@ -44,7 +44,7 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState({
-      leiloeiro: (state) => state.user,
+      leiloeiro: (state) => state.userApp.user,
     }),
   },
 };

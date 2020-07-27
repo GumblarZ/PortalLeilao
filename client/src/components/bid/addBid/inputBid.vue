@@ -77,7 +77,7 @@ export default {
   computed: {
     ...mapState({
       user: state => state.userApp.user,
-      leilao: state => state.bid
+      leilao: state => state.bidApp.bid
     }),
   },
   created() {

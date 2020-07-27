@@ -246,12 +246,8 @@ export default new Vuex.Store({
     setCategories(state, payload){
       state.category = payload
     }
-    
-    
   },
   actions: {
-    
-
     //categorias
     getcategories({commit}){
       firebase.firestore().collection('item').doc('category').get().then(doc => { 

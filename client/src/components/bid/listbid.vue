@@ -40,7 +40,7 @@ import { mapState} from "vuex";
 export default {
   computed:{
     ...mapState({
-      cards: state => state.bids
+      cards: state => state.bidApp.bids
     })
   },
   created() {
