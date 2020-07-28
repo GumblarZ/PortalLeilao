@@ -12,13 +12,14 @@ const user = {
     setUser(state, payload) {
       state.user = payload
     },
+    resetUser(state){
+      state.user = {}
+    }
   },
   actions:{
     async getCurrentUser({ commit }) {
       let user = await firebase.auth().currentUser
       commit('setUser', user)
-
-
     },
     signUserUp({ commit }, payload) {
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.senha)
@@ -53,6 +54,12 @@ const user = {
           alert('Aconteceu algo inesperado. ' + err.message)
         })
     },
+    singOut({commit}){
+      firebase.auth().signOut().then(() => {
+        commit('resetUser');
+        alert('Usuario deslogou');
+      })
+    }
   },
   getters:{
     user(state) {
