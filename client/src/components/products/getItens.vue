@@ -24,7 +24,8 @@
                         :elevation='1'
                         class="mt-6 mb-6"
                         width="24%"
-                        max-width="300"                        v-for="card in card"
+                        max-width="300"                        
+                        v-for="card in card"
                         :key="card.id">
                             <v-img width="100%" height="300" :src="card.imgUrl[0]" 
                             >    

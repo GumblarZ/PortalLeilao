@@ -76,7 +76,7 @@ export default {
       if (this.user.email) {
         menuItens = [
           { i: "", title: "Sair", link: "/" },
-          { i: "", title: this.user.email, link: "/userpage" },
+          { i: "", title: this.user.email, link: "/userpage" }, 
         ];
       } else {
         menuItens = [
@@ -86,16 +86,10 @@ export default {
       }
       return menuItens;
     },
-    userIsAuthenticated() {
-      return (
-        this.$store.getters.user !== null &&
-        this.$store.getters.user !== undefined
-      );
-    },
   },
   methods: {
     logout() {
-      if (this.menuItens[0].title === "Sair") {
+      if (this.menuItens.title[0] === "Sair") {
         this.$store.dispatch('singOut', this.user);
       }
     },
