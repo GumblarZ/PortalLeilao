@@ -89,6 +89,7 @@ const item = {
   state: {
     items: [],
     item: {},
+    target:'',
   },
   mutations: {
     resetItem(state) {
@@ -156,9 +157,9 @@ const item = {
       });
     },
     deleteItem({commit},payload) {
-      console.log(payload.id);
+      console.log(payload);
       commit
-      firebase.firestore().collection('artigo').doc(payload.id).delete().then(() => {
+      firebase.firestore().collection('artigo').doc(payload).delete().then(() => {
         alert("Deletado com sucesso");
       }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);

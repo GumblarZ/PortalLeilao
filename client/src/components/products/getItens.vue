@@ -26,7 +26,7 @@
                         width="24%"
                         max-width="300"                        
                         v-for="card in card"
-                        :key="card.id">
+                        :key="card.length">
                             <v-img width="100%" height="300" :src="card.imgUrl[0]" 
                             >    
                             </v-img>
@@ -84,7 +84,8 @@ export default {
         return{
             pesquisar:null,
             page:1,
-            items:[],        
+            items:[],
+            target:{}      
         }
     },
     computed: {
@@ -111,8 +112,9 @@ export default {
             }
         },
         deletar(id){
-            console.log(id);
-            this.$store.dispatch('deleteItem',id);
+            this.target = id
+            console.log("ativo "+ this.target)
+            this.$store.dispatch('deleteItem',this.target);
         }
     },
 }
