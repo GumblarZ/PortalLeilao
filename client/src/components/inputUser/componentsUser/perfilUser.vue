@@ -15,26 +15,32 @@
         <!--dados do usuario-->
           <div class="mt-12">  
             <v-text-field
-              value="Joao Joao Joao"
-              label="NOME COMPLETO :"
+              outlined
+              label="Nome Completo"
+              :value="usuario"
+              readonly
             />
           <v-text-field
-            value="123-***-***-01"
+            :value="Cpf"
             label="CPF :"
-            disabled
+            outlined
+            readonly
           />
           <v-text-field
-            value="Joaozinho@joao.com"
+            outlined
+            :value="Email"
             label="EMAIL :"
           />
           <v-text-field
-            value="24"
+            :value="Idade"
             label="IDADE :"
+            outlined
           />
           <v-text-field
-            value="*************"
+            :value="Senha"
             label="SENHA :"
             disabled
+            outlined
           />
           <v-row justify="center">
             <v-btn outlined color="#422321" >Alterar senha</v-btn>
@@ -45,7 +51,21 @@
   </v-app>
 </template>
 <script>
-
-export default { 
+import { mapState } from "vuex";
+export default {
+  computed: {
+    ...mapState({
+      user: (state) => state.userApp.user,
+    }),
+  },
+  data(){
+    return{
+      usuario:'NOME',
+      Cpf:'123-***-***-01',
+      Email:'Joaozinho@joao.com',
+      Idade:'24',
+      Senha:'*************',
+    }
+  }
 }
 </script>

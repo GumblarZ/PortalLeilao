@@ -40,7 +40,7 @@
           v-for="item in (menuItens)"
           :key="item.title"
           :to="item.link"
-        >
+          >
           {{item.title}}
           <v-icon class="ml-2" size="15">{{ item.i }}</v-icon>
         </v-btn>
@@ -75,8 +75,8 @@ export default {
       let menuItens
       if (this.user.email) {
         menuItens = [
-          { i: "", title: "Sair", link: "/" },
-          { i: "", title: this.user.email, link: "/userpage" }, 
+          { i: "", title: this.user.email, link: "/userpage" },
+          { i: "", title: "Sair", link: "/" }, 
         ];
       } else {
         menuItens = [
@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     logout() {
-      if (this.menuItens.title[0] === "Sair") {
+      if (this.menuItens.title === "Sair") {
         this.$store.dispatch('singOut', this.user);
       }
     },

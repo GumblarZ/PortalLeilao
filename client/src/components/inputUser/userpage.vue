@@ -57,12 +57,12 @@ export default {
       user: state => state.userApp.user
     }),
   },
-  created(){
-    if(!this.user.refreshToken){
-      alert('Logue por favor');
-      this.$router.push('/')
-    }  
-  },
+  //created(){
+  //  if(!this.user.refreshToken){
+  //    alert('Logue por favor');
+  //    this.$router.push('/')
+  //  }  
+  //},
  data:() =>({
     botoes:[
       {icon:'fas fa-user',nome:'Perfil', page: 1},
