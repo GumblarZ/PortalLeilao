@@ -11,6 +11,9 @@
               @submit.prevent="onSignIn"
               />
           </v-row>
+          <v-btn
+          v-on:click="resetPassword"
+          >Esqueci Minha senha</v-btn>
         </v-card>
        </v-row> 
         {{accountData}}
@@ -39,7 +42,7 @@ export default {
       }
     ],
     //dados pro login 
-    accountData:""
+    accountData:{}
   }),
   computed:{
     user(){
@@ -69,6 +72,11 @@ export default {
           this.$router.push('/')
         )
       }
+    },
+    resetPassword(){
+      this.$store.dispatch('resetPassword',this.accountData).then(
+          this.$router.push('/')
+        )
     },
   }
 }
