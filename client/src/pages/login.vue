@@ -74,9 +74,7 @@ export default {
       }
     },
     resetPassword(){
-      this.$store.dispatch('resetPassword',this.accountData).then(
-          this.$router.push('/')
-        )
+      this.$store.dispatch('resetPassword',this.accountData)
     },
   }
 }
