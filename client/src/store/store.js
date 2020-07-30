@@ -130,8 +130,8 @@ const item = {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
-    getItemByID({ commit }) {
-      firebase.firestore().collection('artigo').doc('jfZ3P79A90YITUHbzP7N').get().then(doc => {
+    getItemByID({ commit }, payload) {
+      firebase.firestore().collection('artigo').doc(payload).get().then(doc => {
         const item = doc.data();
         return commit('setItem', item)
       }).catch(err => {

@@ -86,9 +86,6 @@ export default {
 		...mapState({
 			artigo: state => state.itemApp.item,
 		})
-	},
-	created() {
-		this.$store.dispatch('getItemByID', this.artigo);
 	}
   
 }

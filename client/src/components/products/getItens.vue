@@ -49,6 +49,7 @@
                                     <v-btn 
                                     outlined 
                                     rounded 
+                                    @click="leilao(card.id)"
                                     class="pr-12 pl-12" 
                                     color="green">
                                         Ver Mais
@@ -111,10 +112,17 @@ export default {
                return "color:red" 
             }
         },
+        leilao(id){
+            this.target = id
+            console.log("ativo "+ this.target)
+            this.$store.dispatch('getItemByID', this.target)
+            this.$router.push('/leilao')
+        },
         deletar(id){
             this.target = id
             console.log("ativo "+ this.target)
             this.$store.dispatch('deleteItem',this.target);
+            this.$store.dispatch('getAllItems', this.card);
         }
     },
 }
