@@ -17,7 +17,7 @@
             <v-text-field
               outlined
               label="Nome Completo"
-              :value="usuario"
+              :value="user.displayName"
               readonly
             />
           <v-text-field
@@ -28,18 +28,12 @@
           />
           <v-text-field
             outlined
-            :value="Email"
+            :value="user.email"
             label="EMAIL :"
           />
           <v-text-field
-            :value="Idade"
-            label="IDADE :"
-            outlined
-          />
-          <v-text-field
-            :value="Senha"
-            label="SENHA :"
-            disabled
+            :value="user.phoneNumber"
+            label="Telefone :"
             outlined
           />
           <v-row justify="center">

@@ -3,31 +3,31 @@ import Vuex from 'vuex'
 import firebase from 'firebase/app'
 
 const user = {
-  state:{
+  state: {
     user: {},
     loading: false,
     error: null,
   },
-  mutations:{
+  mutations: {
     setUser(state, payload) {
       state.user = payload
     },
-    resetUser(state){
+    resetUser(state) {
       state.user = {}
     }
   },
-  actions:{
+  actions: {
     async getCurrentUser({ commit }) {
-      await firebase.auth().onAuthStateChanged.then((user)=> {
+      await firebase.auth().onAuthStateChanged.then((user) => {
         commit('setUser', user)
-      })   
-    },  
+      })
+    },
     resetPassword({ commit }, payload) {
       commit
       console.log(payload.email);
       firebase.auth().sendPasswordResetEmail(payload.email).then(() => {
         alert('Verifique sua caixa de email para altera sua senha');
-      })      
+      })
     },
     signUserUp({ commit }, payload) {
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.senha)
@@ -44,8 +44,6 @@ const user = {
           });
     },
     signUserIn({ commit }, payload) {
-      console.log(payload.email)
-      console.log(payload)
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.senha)
         .then(
           data => {
@@ -64,22 +62,22 @@ const user = {
           alert('Aconteceu algo inesperado. ' + err.message)
         })
     },
-    singOut({commit}){
+    singOut({ commit }) {
       firebase.auth().signOut().then(() => {
         commit('resetUser');
         alert('Usuario deslogou');
       })
     }
   },
-  getters:{
+  getters: {
     user(state) {
       console.log(state)
       return state.user
     },
-    loading(state){
+    loading(state) {
       return state.loading
     },
-    error(state){
+    error(state) {
       return state.error
     }
   }
@@ -88,36 +86,36 @@ const user = {
 
 //modulo item
 const item = {
-  state:{
-    items:[],
-    item:{},
+  state: {
+    items: [],
+    item: {},
   },
-  mutations:{
-    resetItem(state){
+  mutations: {
+    resetItem(state) {
       state.item = {
-          active: true,
-          category: "",
-          description: "",
-          imgUrl: [],
-          initialBid: 0,
-          name: "",
-          bids: []
+        active: true,
+        category: "",
+        description: "",
+        imgUrl: [],
+        initialBid: 0,
+        name: "",
+        bids: []
       }
     },
-    setItem(state,payload){
+    setItem(state, payload) {
       state.item = payload
     },
-    setAllItems(state,payload){
+    setAllItems(state, payload) {
       state.items = payload
     },
   },
-  actions:{
-    getAllItems({commit}){
+  actions: {
+    getAllItems({ commit }) {
       firebase.firestore().collection('artigo').orderBy('name').get().then(snapshot => {
         let ItemList = [];
-        snapshot.forEach(doc =>{
+        snapshot.forEach(doc => {
           ItemList.push({
-            id:doc.id,
+            id: doc.id,
             active: doc.data().active,
             category: doc.data().category,
             description: doc.data().description,
@@ -125,13 +123,13 @@ const item = {
             initialBid: doc.data().initialBid,
             name: doc.data().name
           });
-        })        
+        })
         return commit('setAllItems', ItemList);
       }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
-    getItemByID({commit}) {
+    getItemByID({ commit }) {
       firebase.firestore().collection('artigo').doc('jfZ3P79A90YITUHbzP7N').get().then(doc => {
         const item = doc.data();
         return commit('setItem', item)
@@ -140,25 +138,26 @@ const item = {
       });
 
     },
-    createItem({commit}, payload) { 
+    createItem({ commit }, payload) {
       firebase.firestore().collection('artigo').add(payload).then(doc => {
-        commit('setItem', doc );
+        commit('setItem', doc);
         return alert(doc.id);
       }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
     //a testar
-    updateItem({commit}, payload) { 
+    updateItem({ commit }, payload) {
       firebase.firestore().collection('artigo').doc(payload.id).update(payload).then(doc => {
-        commit('setItem', doc );
+        commit('setItem', doc);
         alert(doc.name + " alterado com sucesso");
       }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
-    deleteItem(payload) {
-      console.log(payload);
+    deleteItem({commit},payload) {
+      console.log(payload.id);
+      commit
       firebase.firestore().collection('artigo').doc(payload.id).delete().then(() => {
         alert("Deletado com sucesso");
       }).catch(err => {
@@ -166,23 +165,23 @@ const item = {
       });
     },
   },
-  getters:{}
+  getters: {}
 }
 
 //leilao
 const bid = {
-  state:{
-    bids:[],
-    bid:{}
+  state: {
+    bids: [],
+    bid: {}
   },
-  mutations:{
-    setAllBids(state,payload){
+  mutations: {
+    setAllBids(state, payload) {
       state.bids = payload
     },
-    setBid(state,payload){
+    setBid(state, payload) {
       state.bid = payload
     },
-    resetBid(state){
+    resetBid(state) {
       state.bid = {
         name: "",
         description: "",
@@ -196,11 +195,11 @@ const bid = {
       }
     }
   },
-  actions:{
-    getAllBids({commit}){
-      firebase.firestore().collection('leilao').get().then(snapshot =>{
+  actions: {
+    getAllBids({ commit }) {
+      firebase.firestore().collection('leilao').get().then(snapshot => {
         let bidsList = [];
-        snapshot.forEach(doc =>{
+        snapshot.forEach(doc => {
           bidsList.push({
             id: doc.id,
             name: doc.data().name,
@@ -215,30 +214,30 @@ const bid = {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
-    createBid({commit},payload){
-      firebase.firestore().collection('leilao').add(payload).then(doc =>{
-        commit('setBid', doc );
+    createBid({ commit }, payload) {
+      firebase.firestore().collection('leilao').add(payload).then(doc => {
+        commit('setBid', doc);
         return alert(doc.name + " criado com sucesso");
       }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
-    updateBid(payload){
+    updateBid(payload) {
       firebase.firestore().collection('leilao').doc(payload.id).update(payload).then(doc => {
         return alert(doc.name + " atualizado com sucesso");
       }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
-    deleteBid(payload){
+    deleteBid(payload) {
       firebase.firestore().doc(payload.id).delete().then(
         alert("deletado com sucesso")
       ).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
-    getBidById({commit},payload){
-      firebase.firestore().collection('leilao').doc(payload.id).then(doc =>{
+    getBidById({ commit }, payload) {
+      firebase.firestore().collection('leilao').doc(payload.id).then(doc => {
         return commit('setBid', doc);
       }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
@@ -251,30 +250,30 @@ const bid = {
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules:{
+  modules: {
     userApp: user,
     itemApp: item,
-    bidApp: bid  
+    bidApp: bid
   },
-  state: {   
-    category:[], 
+  state: {
+    category: [],
   },
   mutations: {
-    setCategories(state, payload){
+    setCategories(state, payload) {
       state.category = payload
     }
   },
   actions: {
     //categorias
-    getcategories({commit}){
-      firebase.firestore().collection('item').doc('category').get().then(doc => { 
+    getcategories({ commit }) {
+      firebase.firestore().collection('item').doc('category').get().then(doc => {
         let categories = [];
         categories.push(categories = doc.data().category);
         return commit('setCategories', categories);
-      });  
+      });
     }
   },
   getters: {
-    
+
   },
 })
