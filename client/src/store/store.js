@@ -21,12 +21,13 @@ const user = {
       await firebase.auth().onAuthStateChanged.then((user)=> {
         commit('setUser', user)
       })   
-    },
-    resetPassword(payload){
+    },  
+    resetPassword({ commit }, payload) {
+      commit
       console.log(payload.email);
       firebase.auth().sendPasswordResetEmail(payload.email).then(() => {
         alert('Verifique sua caixa de email para altera sua senha');
-      })
+      })      
     },
     signUserUp({ commit }, payload) {
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.senha)
@@ -44,6 +45,7 @@ const user = {
     },
     signUserIn({ commit }, payload) {
       console.log(payload.email)
+      console.log(payload)
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.senha)
         .then(
           data => {
