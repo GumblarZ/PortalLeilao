@@ -76,8 +76,6 @@ export default {
 	},
 	data(){
 		return{		
-			// teste botao de abrir leilao
-			targetItem: 'A5zfqb6in8HoIm99CMmt',
 			vendedor: {
 				value: 5
 			}			
