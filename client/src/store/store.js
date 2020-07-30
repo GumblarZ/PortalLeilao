@@ -18,8 +18,9 @@ const user = {
   },
   actions:{
     async getCurrentUser({ commit }) {
-      let user = await firebase.auth().currentUser
-      commit('setUser', user)
+      let user = await firebase.auth().currentUser.then(()=> {
+        commit('setUser', user)
+      })   
     },
     signUserUp({ commit }, payload) {
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.senha)
