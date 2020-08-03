@@ -68,32 +68,32 @@ export default {
       {icon:"mdi-home",
         title:"Artigos",
         conteudo:[
-          {title:"Produtos", page:1},
+          {title:"Todas as Peças", page:1},
           {title:"adicionar", page:2},
-          
+          {title:"Minhas peças"}
         ]
       },
       //numero 2
       {icon:"mdi-home",
         title:"Leilao",
         conteudo:[
-          {title:"Criar", page:3},
-          {title:"Todos os leiloes", page:4},
-          {title:"Informar sobre o Lote"},
+          {title:"Criar"},
+          {title:"Todos os leiloes"},
+          {title:"Meus leiloes"}
         ]
       },
       //numero 3
       {icon:"mdi-home",
-        title:"Cliente",
+        title:"Mala Direta",
         conteudo:[
+          {title:"Gerenciar todos"},
           {title:"Criar"},
-          {title:"Editar"},
-          {title:"Lista Negra"},
+          {title:"Editar"},          
         ]
       },
       {
         icon:"mdi-home",
-        title:"Produtos",
+        title:"Administrativo",
         conteudo:[
           {title:"nome"}
         ]
