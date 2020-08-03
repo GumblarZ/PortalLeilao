@@ -122,7 +122,8 @@ const item = {
             description: doc.data().description,
             imgUrl: doc.data().imgUrl,
             initialBid: doc.data().initialBid,
-            name: doc.data().name
+            name: doc.data().name,
+            idOrganizer: doc.data().IdOrganizer
           });
         })
         return commit('setAllItems', ItemList);

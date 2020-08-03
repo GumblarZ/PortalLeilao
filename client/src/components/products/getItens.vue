@@ -54,17 +54,26 @@
                                     color="green">
                                         Ver Mais
                                     </v-btn> 
-                                   
+
+                                    <v-btn
+                                        class="pr-12 pl-12" 
+                                        color="green"
+                                        outlined 
+                                        rounded
+                                    >
+                                        Informar sobre o Lote
+                                    </v-btn>
+
                                     <v-btn 
                                     outlined 
                                     rounded 
                                     class="pr-12 pl-12" 
                                     color="red"
-                                    @click="deletar(card.id)"
+                                    @click="deletar(card)"
                                     >
                                         deletar
                                     </v-btn>  
-                                                                  
+                                                                 
                                 </v-row>
                             </v-list-item-content>                            
                         </v-card>
@@ -91,7 +100,8 @@ export default {
     },
     computed: {
     ...mapState({
-      card: state => state.itemApp.items
+      card: state => state.itemApp.items,
+      user: state => state.userApp.user,
     })
   },
     created(){
@@ -118,11 +128,16 @@ export default {
             this.$store.dispatch('getItemByID', this.target)
             this.$router.push('/leilao')
         },
-        deletar(id){
-            this.target = id
-            console.log("ativo "+ this.target)
-            this.$store.dispatch('deleteItem',this.target);
-            this.$store.dispatch('getAllItems', this.card);
+        deletar(item){
+            if(item.idOrganizer === this.user.uid){
+                this.target = item.id
+                this.$store.dispatch('deleteItem',this.target);
+                this.$store.dispatch('getAllItems', this.card);
+            }else{
+                alert("Voce n pode deletar um item q n e seu");
+            }
+            
+            
         }
     },
 }
