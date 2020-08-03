@@ -54,10 +54,7 @@ export default {
   data() {
     return {
       drawer: false,
-      navItens: [
-        { i: "fas fa-home", title: "HOME", routerLinks: "/" },
-        { i: "fas fa-plus", title: "Item", routerLinks: "/adicionarItem" },
-        { i: "fas fa-gavel ", title: "Addleilão", routerLinks: "/addLeilao" },
+      navItens: [  
         { i: "fas fa-gavel ", title: "produtos", routerLinks: "/produtos" },
         { i: "fas fa-gavel ", title: "perfil", routerLinks: "/userpage" },
         { i: "fas fa-gavel ", title: "leiloeiro", routerLinks: "/leiloeiro" },
