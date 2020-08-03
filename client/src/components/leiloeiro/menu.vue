@@ -1,11 +1,11 @@
 <template>
   <v-app id="inspire">
-        <v-navigation-drawer permanent expand-on-hover>
+        <v-navigation-drawer permanent expand>
           <!--INFOMAÇOES DO USUARIO-->
           <v-list>
             <v-list-item class="px-2">
               <v-list-item-avatar>
-                <v-img src="https://cdn.shopify.com/s/files/1/0946/5368/products/alho_grande.jpg?v=1440442906"/>
+                <v-img src="https://pbs.twimg.com/profile_images/1290112648168833025/EwhHtEeJ_400x400.jpg"/>
               </v-list-item-avatar>
               <v-list>
                 <v-list-item-title class="title">{{user.displayname}}</v-list-item-title>

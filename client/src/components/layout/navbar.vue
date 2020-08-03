@@ -75,7 +75,7 @@ export default {
       if (this.user.email) {
         menuItens = [
           { i: "", title: this.user.email, link: "/userpage" },
-          { i: "", title: "Sair", link: "/" }, 
+          { i: "", title: "Sair", link: "/sair" }, 
         ];
       } else {
         menuItens = [
