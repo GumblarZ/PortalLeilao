@@ -58,7 +58,6 @@ export default {
       navItens: [
         { i: "fas fa-home", title: "HOME", routerLinks: "/" },
         { i: "fas fa-plus", title: "Item", routerLinks: "/adicionarItem" },
-        { i: "fas fa-gavel ", title: " leilão", routerLinks: "/leilao" },
         { i: "fas fa-gavel ", title: "Addleilão", routerLinks: "/addLeilao" },
         { i: "fas fa-gavel ", title: "produtos", routerLinks: "/produtos" },
         { i: "fas fa-gavel ", title: "perfil", routerLinks: "/userpage" },
