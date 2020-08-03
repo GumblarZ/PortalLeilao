@@ -32,7 +32,6 @@
       <v-spacer />
       <v-toolbar-items class="hidden-xs-only">
         <v-btn
-          @click="logout"
           color="#EEB147"
           text
           center
@@ -85,13 +84,6 @@ export default {
       }
       return menuItens;
     },
-  },
-  methods: {
-    logout() {
-      if (this.menuItens.title === "Sair") {
-        this.$store.dispatch('singOut', this.user);
-      }
-    },
-  },
+  }
 };
 </script>
