@@ -2,13 +2,13 @@
   <v-app id="inspire">
         <v-navigation-drawer permanent expand-on-hover>
           <!--INFOMAÇOES DO USUARIO-->
-          <v-list :key="usuario.length" v-for="usuario in usuario">
+          <v-list>
             <v-list-item class="px-2">
               <v-list-item-avatar>
                 <v-img src="https://cdn.shopify.com/s/files/1/0946/5368/products/alho_grande.jpg?v=1440442906"/>
               </v-list-item-avatar>
               <v-list>
-                <v-list-item-title class="title">{{user.name}}</v-list-item-title>
+                <v-list-item-title class="title">{{user.displayname}}</v-list-item-title>
                 <v-list-item-subtitle class="title">{{user.email}}</v-list-item-subtitle>
               </v-list>
             </v-list-item>
