@@ -89,6 +89,7 @@ export default {
   },
   methods: {
     addLeilao(bid) {
+      this.leilao.idOrganizer = this.user.uid;
       this.$store.dispatch('createBid', bid);
       this.$router.push("/")
     },

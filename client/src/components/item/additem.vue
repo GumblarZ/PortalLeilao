@@ -137,7 +137,8 @@ export default {
         alert('Porfavor defina o nome do artigo antes');
       }
     },
-    addartigo() {     
+    addartigo() {
+      this.artigo.IdOrganizer = this.user.uid;     
       this.$store.dispatch('createItem', this.artigo);
       this.$router.push('/')
     }
