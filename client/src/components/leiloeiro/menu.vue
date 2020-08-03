@@ -95,7 +95,10 @@ export default {
         icon:"mdi-home",
         title:"Administrativo",
         conteudo:[
-          {title:"nome"}
+          {title:"Levantamento Geral"},
+          {title:"Gerenciar pocentagem"},
+          {title:"reportar problema"},
+          {Title:"imprimir documento"}
         ]
       }
     ] 
