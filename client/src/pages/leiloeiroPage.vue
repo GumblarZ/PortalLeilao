@@ -12,13 +12,19 @@
           <v-window-item :value="2">           
             <addItem/>
           </v-window-item>
+          <v-window-item :value="3">           
+            <h1>a fazer</h1>
+          </v-window-item>
 
           <!-- leilao -->
-          <v-window-item :value="3">           
-            <addBid/>
-          </v-window-item>
           <v-window-item :value="4">           
             <listBid/>
+          </v-window-item>
+          <v-window-item :value="5">           
+            <addBid/>
+          </v-window-item>
+          <v-window-item :value="6">           
+            <h1>a fazer</h1>
           </v-window-item>
         </v-window>
       </v-col>

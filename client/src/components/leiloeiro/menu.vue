@@ -70,35 +70,35 @@ export default {
         conteudo:[
           {title:"Todas as Peças", page:1},
           {title:"adicionar", page:2},
-          {title:"Minhas peças"}
+          {title:"Minhas peças", page:3}
         ]
       },
       //numero 2
       {icon:"mdi-home",
         title:"Leilao",
         conteudo:[
-          {title:"Criar"},
-          {title:"Todos os leiloes"},
-          {title:"Meus leiloes"}
+          {title:"Todos os leiloes", page:4},
+          {title:"Criar", page:5},
+          {title:"Meus leiloes", page:6}
         ]
       },
       //numero 3
       {icon:"mdi-home",
         title:"Mala Direta",
         conteudo:[
-          {title:"Gerenciar todos"},
-          {title:"Criar"},
-          {title:"Editar"},          
+          {title:"Gerenciar todos", page:7},
+          {title:"Criar", page:8},
+          {title:"Editar", page:9},          
         ]
       },
       {
         icon:"mdi-home",
         title:"Administrativo",
         conteudo:[
-          {title:"Levantamento Geral"},
-          {title:"Gerenciar pocentagem"},
-          {title:"reportar problema"},
-          {Title:"imprimir documento"}
+          {title:"Levantamento Geral", page:10},
+          {title:"Gerenciar pocentagem", page:11},
+          {title:"reportar problema", page:12},
+          {Title:"imprimir documento", page:13}
         ]
       }
     ] 
