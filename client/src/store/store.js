@@ -67,6 +67,16 @@ const user = {
         commit('resetUser');
         alert('Usuario deslogou');
       })
+    },
+    uploadProfileImg({commit},payload){
+      firebase.auth().currentUser.updateProfile({
+        photoUrl: payload
+      }).then(()=>{
+        commit
+        alert("alterado com sucesso")
+      }).catch(err => {
+        alert('Aconteceu algo inesperado. ' + err.message)
+      })
     }
   },
   getters: {

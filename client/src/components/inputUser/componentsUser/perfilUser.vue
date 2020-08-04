@@ -9,7 +9,7 @@
         <!--FOTO DO USUARIO-->
           <v-row justify="center"> 
             <v-avatar color="#422321" size="280">
-              <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
+              <v-img :src="user.photoUrl"></v-img>
             </v-avatar>
           </v-row>
           <v-row justify="center">
@@ -54,6 +54,7 @@
           />
           <v-row justify="center">
             <v-btn outlined color="#422321" >Alterar senha</v-btn>
+            {{user.photoUrl}}
           </v-row> 
         </div>          
       </v-col>
@@ -72,9 +73,7 @@ export default {
   },
   data(){
     return{
-      usuario:'NOME',
       Cpf:'123-***-***-01',
-      Email:'Joaozinho@joao.com',
       image:""
     }
   },
@@ -82,18 +81,14 @@ export default {
     async onUpload() {
       let images = this.image;
       images.forEach(image => {
-        firebase
-          .storage()
-          .ref(
-            "PerfilImage/" + this.user.uid +"/" + image.name
-          )
-          .put(image)
-          .then(snapshot => {
+        firebase.storage().ref("PerfilImage/" + this.user.uid).put(image).then(snapshot => {
             snapshot.ref.getDownloadURL().then(url => {
-              console.log(url)
+                console.log(url)
+                this.$store.dispatch('uploadProfileImg', url);
             });
           });
       });
+      console.log(this.user.photoUrl);
     },
     
   }
