@@ -19,17 +19,16 @@
                     </div>
                         <v-divider class="mx-8"/>
                     <!--cards-->
-                    <v-row justify="space-around" >
+                    <v-row justify="space-around" no-gutters>
                         <v-card
                         :elevation='1'
-                        class="mt-6 mb-6"
+                        class="mt-6 mb-6 "
                         width="24%"
                         max-width="300"                        
                         v-for="card in card"
                         :key="card.length">
                             <v-img width="100%" height="300" :src="card.imgUrl[0]" 
-                            >    
-                            </v-img>
+                            />
                              <v-list-item-content class="ml-5">   
                                 <span :style="color(card.active)">{{status(card.active)}}</span>
                                     <v-list-item-title 
@@ -42,28 +41,14 @@
                                     >
                                         {{card.description}}
                                     </v-list-item>
-                                <v-divider class="mx-5" color="#EDE7E2"/>           
-                                <v-row 
-                                class="pt-6" 
-                                justify="center">
+                                <v-divider class="mx-5" color="#EDE7E2"/>
                                     <v-btn 
                                     outlined 
                                     rounded 
                                     @click="leilao(card.id)"
-                                    class="pr-12 pl-12" 
                                     color="green">
                                         Ver Mais
-                                    </v-btn> 
-
-                                    <v-btn
-                                        class="pr-12 pl-12" 
-                                        color="green"
-                                        outlined 
-                                        rounded
-                                    >
-                                        Informar sobre o Lote
                                     </v-btn>
-
                                     <v-btn 
                                     outlined 
                                     rounded 
@@ -72,14 +57,22 @@
                                     @click="deletar(card)"
                                     >
                                         deletar
-                                    </v-btn>  
-                                                                 
-                                </v-row>
+                                    </v-btn>
+                                    <v-row no-gutters>
+                                    <v-divider/>
+                                    <v-btn
+                                        class="pr-12 pl-12 mt-6" 
+                                        color="blue"
+                                        text
+                                        rounded
+                                    >
+                                        Informar sobre o Lote
+                                    </v-btn>
+                                    </v-row>
                             </v-list-item-content>                            
                         </v-card>
                     </v-row>    
                 </v-col>
-            <!--paginaçao-->
     </v-card>            
 </template>
 

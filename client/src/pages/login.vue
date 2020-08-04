@@ -11,9 +11,13 @@
               @submit.prevent="onSignIn"
               />
           </v-row>
-          <v-btn
-          v-on:click="resetPassword"
-          >Esqueci Minha senha</v-btn>
+            <v-row justify="center"> 
+              <v-btn
+              color="562B28"
+              text
+              v-on:click="resetPassword"
+              >Esqueci Minha senha</v-btn>
+            </v-row>
         </v-card>
        </v-row> 
         {{accountData}}

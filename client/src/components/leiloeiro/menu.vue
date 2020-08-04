@@ -15,6 +15,18 @@
           </v-list>
           <v-divider />
           <!--CATEGORIAS-->
+          <v-btn 
+              x-large 
+              color="#562B28" 
+              dark 
+              depressed 
+              width='100%'
+              @click="meunMudaPagina(1)"
+              >
+                <v-icon>mdi-home</v-icon>
+                <v-spacer/>
+                <span>Página Inicial</span>
+              </v-btn>
           <v-list 
             nav 
             dense 
@@ -65,40 +77,46 @@ export default {
     usuario:[],
     conteudos:[
       //numero 1
-      {icon:"mdi-home",
+      {icon:"fas fa-wine-glass",
         title:"Artigos",
         conteudo:[
-          {title:"Todas as Peças", page:1},
-          {title:"adicionar", page:2},
-          {title:"Minhas peças", page:3}
+          {title:"Todas as Peças", page:2},
+          {title:"adicionar", page:3},
+          {title:"Minhas peças", page:4}
         ]
       },
       //numero 2
-      {icon:"mdi-home",
+      {icon:"fas fa-hand-holding-usd",
         title:"Leilao",
         conteudo:[
-          {title:"Todos os leiloes", page:4},
-          {title:"Criar", page:5},
-          {title:"Meus leiloes", page:6}
+          {title:"Todos os leiloes", page:5},
+          {title:"Criar", page:6},
+          {title:"Meus leiloes", page:7}
         ]
       },
       //numero 3
-      {icon:"mdi-home",
+      {icon:"fas fa-suitcase",
         title:"Mala Direta",
         conteudo:[
-          {title:"Gerenciar todos", page:7},
-          {title:"Criar", page:8},
-          {title:"Editar", page:9},          
+          {title:"Gerenciar todos", page:8},
+          {title:"Criar", page:9},
+          {title:"Editar", page:10},          
         ]
       },
       {
-        icon:"mdi-home",
+        icon:"fas fa-tasks",
         title:"Administrativo",
         conteudo:[
-          {title:"Levantamento Geral", page:10},
-          {title:"Gerenciar pocentagem", page:11},
-          {title:"reportar problema", page:12},
-          {Title:"imprimir documento", page:13}
+          {title:"Levantamento Geral", page:12},
+          {title:"Gerenciar pocentagem", page:12},
+          {title:"reportar problema", page:13},
+          {title:"imprimir documento", page:14}
+        ]
+      },
+      {
+        icon:"fas fa-cog",
+        title:"Ajustes",
+        conteudo:[
         ]
       }
     ] 
