@@ -47,15 +47,9 @@ const user = {
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.senha)
         .then(
           data => {
-            let newUser = {
-              displayname: data.user.displayname,
-              email: data.user.email,
-              phoneNumber: data.user.phoneNumber,
-              photoUrl: data.user.photoUrl,
-              refreshToken: data.user.refreshToken,
-              uid: data.user.uid
-            }
-            commit('setUser', newUser);
+            console.log(data)
+            let userProfile = data.user
+            commit('setUser', userProfile);
           }
         )
         .catch(err => {

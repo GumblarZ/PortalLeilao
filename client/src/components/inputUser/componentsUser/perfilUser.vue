@@ -14,6 +14,15 @@
           </v-row>
           <v-row justify="center">
 
+          <v-btn 
+            v-if="modal == false"
+            outlined color="#422321" 
+            @click="modalPhoto"
+          >
+            Alterar foto de perfil
+          </v-btn>
+          <v-row v-if="modal">
+              <!--updando a imagem-->
             <v-file-input
               multiple
                 show-size
@@ -26,6 +35,15 @@
             >
             Alterar foto de perfil
             </v-file-input>
+            <v-btn 
+            v-if="modal == true"
+            outlined color="#422321" 
+            @click="modalPhoto"
+          >
+            cancelar
+          </v-btn>
+          </v-row>
+        
 
           </v-row>
         <!--dados do usuario-->
@@ -53,7 +71,12 @@
             outlined
           />
           <v-row justify="center">
-            <v-btn outlined color="#422321" >Alterar senha</v-btn>
+            <v-btn 
+              outlined color="#422321"
+              @click="alterarSenha" 
+            >
+              Alterar senha
+            </v-btn>
             {{user.photoUrl}}
           </v-row> 
         </div>          
@@ -74,10 +97,21 @@ export default {
   data(){
     return{
       Cpf:'123-***-***-01',
+      modal: false,
       image:""
     }
   },
   methods: {
+    modalPhoto(){
+      if(this.modal){
+        this.modal = false;
+      }else{
+        this.modal = true;
+      }   
+    },
+    alterarSenha(){
+      this.$store.dispatch('resetPassword', this.user)
+    },
     async onUpload() {
       let images = this.image;
       images.forEach(image => {
