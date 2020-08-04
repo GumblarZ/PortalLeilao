@@ -12,15 +12,15 @@
           <v-window-item :value="2" >
             <produtos/>
           </v-window-item>
-          <v-window-item :value="4">           
+          <v-window-item :value="3">           
             <addItem/>
           </v-window-item>
-          <v-window-item :value="5">           
+          <v-window-item :value="4">           
             <h1>a fazer</h1>
           </v-window-item>
 
           <!-- leilao -->
-          <v-window-item :value="6">           
+          <v-window-item :value="5">           
             <listBid/>
           </v-window-item>
           <v-window-item :value="6">           

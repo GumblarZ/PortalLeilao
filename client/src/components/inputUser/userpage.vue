@@ -58,10 +58,10 @@ export default {
     }),
   },
   created(){
-    if(!this.user.refreshToken){
-      alert('Logue por favor')
-      this.$router.push('/')    
-    }  
+  //  if(!this.user.refreshToken){
+    //  alert('Logue por favor')
+      //this.$router.push('/')    
+    //}  
   },
  data:() =>({
     botoes:[

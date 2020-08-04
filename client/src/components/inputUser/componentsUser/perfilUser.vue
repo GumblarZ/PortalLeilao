@@ -12,6 +12,22 @@
               <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
             </v-avatar>
           </v-row>
+          <v-row justify="center">
+
+            <v-file-input
+              multiple
+                show-size
+                counter
+                @change="onUpload"
+                prepend-icon="mdi-camera"
+                v-model="image"
+                label="Insira a Imagem"
+              outlined color="#422321" 
+            >
+            Alterar foto de perfil
+            </v-file-input>
+
+          </v-row>
         <!--dados do usuario-->
           <div class="mt-12">  
             <v-text-field
@@ -45,6 +61,8 @@
   </v-app>
 </template>
 <script>
+import firebase from "firebase";
+import "firebase/storage";
 import { mapState } from "vuex";
 export default {
   computed: {
@@ -57,9 +75,27 @@ export default {
       usuario:'NOME',
       Cpf:'123-***-***-01',
       Email:'Joaozinho@joao.com',
-      Idade:'24',
-      Senha:'*************',
+      image:""
     }
+  },
+  methods: {
+    async onUpload() {
+      let images = this.image;
+      images.forEach(image => {
+        firebase
+          .storage()
+          .ref(
+            "PerfilImage/" + this.user.uid +"/" + image.name
+          )
+          .put(image)
+          .then(snapshot => {
+            snapshot.ref.getDownloadURL().then(url => {
+              console.log(url)
+            });
+          });
+      });
+    },
+    
   }
 }
 </script>
