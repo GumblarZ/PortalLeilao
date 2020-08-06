@@ -29,6 +29,9 @@
               <v-card-subtitle class="title">Lotes: {{ card.items }}</v-card-subtitle>
             </v-col>
           </v-row>
+          <v-btn>Ver Lotes</v-btn>
+          <v-btn>Editar</v-btn>
+          <v-btn>Deletar</v-btn>
         </v-card>
       </v-row>
     </v-card>
