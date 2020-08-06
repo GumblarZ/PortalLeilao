@@ -31,20 +31,38 @@
           </v-row>
           <v-btn>Ver Lotes</v-btn>
           <v-btn>Editar</v-btn>
-          <v-btn>Deletar</v-btn>
+          <v-btn
+          @click="deletar(card)"
+          >
+            Deletar
+          </v-btn>
         </v-card>
       </v-row>
     </v-card>
+    {{cards}}
   </v-app>
 </template>
 
 <script>
 import { mapState} from "vuex";
 export default {
+  data() {
+    return {
+      target:""
+    }
+  },
   computed:{
     ...mapState({
       cards: state => state.bidApp.bids
     })
+  },
+  methods: {
+    deletar(bid){
+      this.target = bid.id
+      console.log(this.target);
+      this.$store.dispatch('deleteBid', this.target);
+        this.$router.push('/leiloeiro');
+    }
   },
   created() {
     this.$store.dispatch('getAllBids', this.cards);

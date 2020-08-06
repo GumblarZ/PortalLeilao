@@ -17,10 +17,8 @@ const user = {
     }
   },
   actions: {
-    async getCurrentUser({ commit }) {
-      await firebase.auth().onAuthStateChanged.then((user) => {
-        commit('setUser', user)
-      })
+    async getCurrentUser() {
+      
     },
     resetPassword({ commit }, payload) {
       commit
@@ -62,9 +60,10 @@ const user = {
         alert('Usuario deslogou');
       })
     },
-    uploadProfileImg({commit},payload){
-      firebase.auth().currentUser.updateProfile({
-        photoUrl: payload
+    uploadProfileImg({commit},url){
+      const currentUser = firebase.auth();
+      currentUser.updateProfile({
+        photoUrl: url
       }).then(()=>{
         commit
         alert("alterado com sucesso")
@@ -235,10 +234,12 @@ const bid = {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
-    deleteBid(payload) {
-      firebase.firestore().doc(payload.id).delete().then(
+    deleteBid({commit},payload) {
+      console.log("retornou "+ payload)
+      commit
+      firebase.firestore().doc(payload).delete().then(()=>{
         alert("deletado com sucesso")
-      ).catch(err => {
+      }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
