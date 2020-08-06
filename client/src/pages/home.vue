@@ -19,8 +19,6 @@ import livesDesabilitadas from "../components/home/getLivesDisabled"
 import registroEmail from "../components/home/registreEmail"
 import anuncioPagamento from "../components/home/paymentAnnouncement"
 
-import {mapActions} from 'vuex'
-
 export default {
     components:{
         
@@ -31,15 +29,7 @@ export default {
         livesDesabilitadas,
         registroEmail,
         anuncioPagamento
-    },
-    computed:{
-       ...mapActions({
-           vericador: 'store/userApp/getCurrentUser'
-       }) 
-    },
-    created() {
-        this.vericador
-    },
+    }
 }
 </script>
 
