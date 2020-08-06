@@ -18,7 +18,14 @@ const user = {
   },
   actions: {
     async getCurrentUser() {
-      
+      firebase.auth().onAuthStateChanged.then((user) => {
+        if(user){
+          console.log('usuario logado '+ user);
+         return this.$store.commit('setUser', user)
+        }else{
+          console.log('sem usuarios logados')
+        } 
+      })
     },
     resetPassword({ commit }, payload) {
       commit
@@ -227,22 +234,21 @@ const bid = {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
     },
+    deleteBid({commit},payload) {
+      commit
+      firebase.firestore().collection('leilao').doc(payload).delete().then(()=>{
+        alert("deletado com sucesso")
+      }).catch(err => {
+        alert('Aconteceu algo inesperado. ' + err.message);
+      });
+    },
     updateBid(payload) {
       firebase.firestore().collection('leilao').doc(payload.id).update(payload).then(doc => {
         return alert(doc.name + " atualizado com sucesso");
       }).catch(err => {
         alert('Aconteceu algo inesperado. ' + err.message);
       });
-    },
-    deleteBid({commit},payload) {
-      console.log("retornou "+ payload)
-      commit
-      firebase.firestore().doc(payload).delete().then(()=>{
-        alert("deletado com sucesso")
-      }).catch(err => {
-        alert('Aconteceu algo inesperado. ' + err.message);
-      });
-    },
+    }, 
     getBidById({ commit }, payload) {
       firebase.firestore().collection('leilao').doc(payload.id).then(doc => {
         return commit('setBid', doc);

@@ -59,9 +59,7 @@ export default {
   methods: {
     deletar(bid){
       this.target = bid.id
-      console.log(this.target);
       this.$store.dispatch('deleteBid', this.target);
-        this.$router.push('/leiloeiro');
     }
   },
   created() {
