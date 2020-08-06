@@ -9,7 +9,7 @@
         <!--FOTO DO USUARIO-->
           <v-row justify="center"> 
             <v-avatar color="#422321" size="280">
-              <v-img :src="user.photoUrl"></v-img>
+              <v-img :src="user.photoURL"></v-img>
             </v-avatar>
           </v-row>
           <v-row justify="center">
@@ -77,7 +77,6 @@
             >
               Alterar senha
             </v-btn>
-            {{user.photoUrl}}
           </v-row> 
         </div>          
       </v-col>
