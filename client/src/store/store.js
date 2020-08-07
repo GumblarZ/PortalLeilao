@@ -17,16 +17,6 @@ const user = {
     }
   },
   actions: {
-    async getCurrentUser() {
-      firebase.auth().onAuthStateChanged.then((user) => {
-        if(user){
-          console.log('usuario logado '+ user);
-         return this.$store.commit('setUser', user)
-        }else{
-          console.log('sem usuarios logados')
-        } 
-      })
-    },
     resetPassword({ commit }, payload) {
       commit
       console.log(payload.email);
