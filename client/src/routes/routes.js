@@ -8,6 +8,7 @@ import Produtos from "../pages/Produtos";
 import userpage from "../pages/userpage.vue";
 import adicionarLeilao from "../pages/addLeilao.vue";
 import leiloeiroPage from "../pages/leiloeiroPage";
+import logout from "../pages/logout";
 
 
 const router = new VueRouter({
@@ -61,6 +62,11 @@ const router = new VueRouter({
                 path:"/leiloeiro",
                 name:"leiloeiroPage",
                 component:leiloeiroPage
+            },
+            {
+                path:"/sair",
+                name:"sair",
+                component:logout
             }
         ]
     });

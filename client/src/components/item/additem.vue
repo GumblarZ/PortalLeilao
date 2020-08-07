@@ -54,7 +54,12 @@
                 v-model="image"
                 label="Insira a Imagem"
               />
-              <v-img width="100%" height="300" :src="artigo.imgUrl[1]"/>
+              <v-carousel>
+                <v-carousel-item
+                v-for="img in artigo.imgUrl"
+                :key="img"
+                :src="img"/>
+              </v-carousel>
               <v-text-field class="col-md 2" v-model="artigo.imgUrl" label="Imagens" disabled />
             </v-flex>
           </v-layout>
@@ -87,50 +92,39 @@
 <script>
 import firebase from "firebase";
 import "firebase/storage";
-import { VMoney } from "v-money";
-
 import { mapState} from "vuex";
 export default {
   name: "app",
   data() {
     return {
-      money: {
-        decimal: ",",
-        thousands: ".",
-        prefix: "R$ ",
-        suffix: " ",
-        precision: 2,
-        masked: false
-      },
       image: [],
-      categories: []
     };
   },
   computed: {
     ...mapState({
-      artigo: state => state.item,
-      user: state => state.user,
+      artigo: state => state.itemApp.item,
+      user: state => state.userApp.user,
+      categories: state => state.category
       
-    })
+    }),
   },
-
-  directives: { money: VMoney },
   created() {
-    firebase.firestore().collection('item').doc('category').get().then(doc => { 
-        this.categories.push(this.categories = doc.data().category);
-        return this.categories;
-      }).catch(err => {
-        alert('Aconteceu algo inesperado. ' + err.message);
-      });
+    this.$store.commit('resetItem');
+    this.$store.dispatch('getcategories', this.categories);
+    if(!this.user.refreshToken){
+      alert('Logue por favor');
+      this.$router.push('/')
+    }  
   },
   methods: {
     async onUpload() {
+      if(this.artigo.name){
       let images = this.image;
       images.forEach(image => {
         firebase
           .storage()
           .ref(
-            "items/" + this.user.uid + "/" + this.artigo.name + "/" + image.name
+            "artigo/" + this.user.uid + "/" + this.artigo.name + "/" + image.name
           )
           .put(image)
           .then(snapshot => {
@@ -139,12 +133,14 @@ export default {
             });
           });
       });
+      }else{
+        alert('Porfavor defina o nome do artigo antes');
+      }
     },
-    async addartigo() {     
-    let item = firebase.firestore().collection('item');
-    await item.add(this.artigo)
-    .then(doc => alert(doc.name +" registrado com Sucesso"))
-    .catch(error => console.log(error.message))
+    addartigo() {
+      this.artigo.IdOrganizer = this.user.uid;     
+      this.$store.dispatch('createItem', this.artigo);
+      this.$router.push('/')
     }
   }
 };

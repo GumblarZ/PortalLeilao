@@ -33,13 +33,25 @@ const config = {
   appId: "1:824708684017:web:7d337614f396ff93687150",
   measurementId: "G-L29VYEQZ83"
 };
-// Instancia do Firebase
-firebase.initializeApp(config);
+
+
 new Vue({
     router,
     vuetify,
     store,
-    render: h => h(App)
+    render: h => h(App),
+    created() {
+      // Instancia do Firebase
+      firebase.initializeApp(config);
+      firebase.auth().onAuthStateChanged((user) =>{
+        if(user){
+          this.$store.commit('setUser',user);
+        }else{
+          console.log("sem usuario logado");
+        }
+      })
+
+    },
 }).$mount("#app");
 
 

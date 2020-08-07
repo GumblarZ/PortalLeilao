@@ -29,33 +29,41 @@
               <v-card-subtitle class="title">Lotes: {{ card.items }}</v-card-subtitle>
             </v-col>
           </v-row>
+          <v-btn>Ver Lotes</v-btn>
+          <v-btn>Editar</v-btn>
+          <v-btn
+          @click="deletar(card)"
+          >
+            Deletar
+          </v-btn>
         </v-card>
       </v-row>
     </v-card>
+    {{cards}}
   </v-app>
 </template>
 
 <script>
-import axios from "axios";
+import { mapState} from "vuex";
 export default {
   data() {
     return {
-      cards: []
-    };
+      target:""
+    }
   },
   computed:{
-    
+    ...mapState({
+      cards: state => state.bidApp.bids
+    })
+  },
+  methods: {
+    deletar(bid){
+      this.target = bid.id
+      this.$store.dispatch('deleteBid', this.target);
+    }
   },
   created() {
-    axios({
-      method: "get",
-      url:
-        "https://us-central1-portalleilao-26290.cloudfunctions.net/leilao/getAllBid"
-    })
-      .then(doc => {
-        this.cards = doc.data;
-      })
-      .catch(error => console.log(error));
+    this.$store.dispatch('getAllBids', this.cards);
   }
 };
 </script>

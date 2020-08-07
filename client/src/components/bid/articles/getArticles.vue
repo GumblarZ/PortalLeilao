@@ -69,29 +69,21 @@
 </template>
 <script>
 import lance from "./InputArticlesBid";
-import firebase from 'firebase';
+import { mapState} from "vuex";
 export default {
 	components:{
 		lance
 	},
 	data(){
 		return{		
-			// teste botao de abrir leilao
-			targetItem: 'A5zfqb6in8HoIm99CMmt',
-			artigo: {},
 			vendedor: {
 				value: 5
 			}			
 		};
-	},
-
-	created() {
-		firebase.firestore().collection('item').doc(this.targetItem).get().then(doc => {
-        const item = doc.data();
-        return this.artigo = item;
-      }).catch(err => {
-        alert('Aconteceu algo inesperado. ' + err.message);
-      });
+	},computed: {
+		...mapState({
+			artigo: state => state.itemApp.item,
+		})
 	}
   
 }

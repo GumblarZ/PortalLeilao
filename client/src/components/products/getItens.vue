@@ -19,16 +19,16 @@
                     </div>
                         <v-divider class="mx-8"/>
                     <!--cards-->
-                    <v-row justify="space-around" >
+                    <v-row justify="space-around" no-gutters>
                         <v-card
                         :elevation='1'
-                        class="mt-6 mb-6"
+                        class="mt-6 mb-6 "
                         width="24%"
-                        max-width="300"                        v-for="card in card"
-                        :key="card.id">
+                        max-width="300"                        
+                        v-for="card in card"
+                        :key="card.length">
                             <v-img width="100%" height="300" :src="card.imgUrl[0]" 
-                            >    
-                            </v-img>
+                            />
                              <v-list-item-content class="ml-5">   
                                 <span :style="color(card.active)">{{status(card.active)}}</span>
                                     <v-list-item-title 
@@ -41,29 +41,44 @@
                                     >
                                         {{card.description}}
                                     </v-list-item>
-                                <v-divider class="mx-5" color="#EDE7E2"/>           
-                                <v-row 
-                                class="pt-6" 
-                                justify="center">
+                                <v-divider class="mx-5" color="#EDE7E2"/>
+                                    <v-btn 
+                                    outlined 
+                                    rounded 
+                                    @click="leilao(card.id)"
+                                    color="green">
+                                        Ver Mais
+                                    </v-btn>
                                     <v-btn 
                                     outlined 
                                     rounded 
                                     class="pr-12 pl-12" 
-                                    color="green">
-                                        Ver Mais
-                                    </v-btn>                                  
-                                </v-row>
-                            </v-list-item-content>
+                                    color="red"
+                                    @click="deletar(card)"
+                                    >
+                                        deletar
+                                    </v-btn>
+                                    <v-row no-gutters>
+                                    <v-divider/>
+                                    <v-btn
+                                        class="pr-12 pl-12 mt-6" 
+                                        color="blue"
+                                        text
+                                        rounded
+                                    >
+                                        Informar sobre o Lote
+                                    </v-btn>
+                                    </v-row>
+                            </v-list-item-content>                            
                         </v-card>
                     </v-row>    
                 </v-col>
-            <!--paginaçao-->
     </v-card>            
 </template>
 
 <script>
 import Resp from './responsivo/ProdutoResponsivo';
-import firebase from "firebase";
+import { mapState} from "vuex";
 export default {
     components:{
         Resp,
@@ -73,19 +88,17 @@ export default {
             pesquisar:null,
             page:1,
             items:[],
-            card:[]
+            target:{}      
         }
     },
+    computed: {
+    ...mapState({
+      card: state => state.itemApp.items,
+      user: state => state.userApp.user,
+    })
+  },
     created(){
-        firebase.firestore().collection('item').orderBy('name').get().then(snapshot => {
-        let ItemList = [];
-        snapshot.forEach(doc =>{
-          ItemList.push(doc.data());
-        })        
-        return this.card = ItemList 
-      }).catch(err => {
-        alert('Aconteceu algo inesperado. ' + err.message);
-      });
+        this.$store.dispatch('getAllItems', this.card);
     },
     methods:{
         status(status){
@@ -101,6 +114,23 @@ export default {
             }else{
                return "color:red" 
             }
+        },
+        leilao(id){
+            this.target = id
+            console.log("ativo "+ this.target)
+            this.$store.dispatch('getItemByID', this.target)
+            this.$router.push('/leilao')
+        },
+        deletar(item){
+            if(item.idOrganizer === this.user.uid){
+                this.target = item.id
+                this.$store.dispatch('deleteItem',this.target);
+                this.$store.dispatch('getAllItems', this.card);
+            }else{
+                alert("Voce n pode deletar um item q n e seu");
+            }
+            
+            
         }
     },
 }

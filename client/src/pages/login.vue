@@ -1,16 +1,26 @@
-
 <template >
     <v-main>
-       <v-row justify="center">
-           <login 
-            justify="center"
-            align="center" 
-            titulo="Entre con..."
-            @clicked="clique"
-            @email="getAccountData"
-            :buttons="buttons"/> 
-       </v-row>
-       {{accountData}}
+      <v-row  justify="center">
+        <v-card max-width="30%" min-width="450" class="mb-6 pa-3"  :elevation="10" width="50%" >
+          <v-row justify="center">
+            <login  
+              titulo="Entre com..."
+              @clicked="clique"
+              @email="getAccountData"
+              :buttons="buttons"
+              @submit.prevent="onSignIn"
+              />
+          </v-row>
+            <v-row justify="center"> 
+              <v-btn
+              color="562B28"
+              text
+              v-on:click="resetPassword"
+              >Esqueci Minha senha</v-btn>
+            </v-row>
+        </v-card>
+       </v-row> 
+        {{accountData}}
     </v-main>
 </template>
 
@@ -36,16 +46,39 @@ export default {
       }
     ],
     //dados pro login 
-    accountData:""
+    accountData:{}
   }),
+  computed:{
+    user(){
+      return this.$store.getters.user
+      },
+    error(){
+      return this.$store.getters.error
+      },
+    loading(){
+      return this.$store.getters.loading
+      },  
+    },
+  watch:{
+    user(value){
+      if(value == null && value == undefined){
+        this.$router.push('/')
+      }
+    }
+  },  
   methods:{
     getAccountData(accountData){
       this.accountData = accountData
     },
     async clique(botao){
       if(botao == 'login'){
-        await this.$store.dispatch('signUserIn',this.accountData)
+        await this.$store.dispatch('signUserIn',this.accountData).then(
+          this.$router.push('/')
+        )
       }
+    },
+    resetPassword(){
+      this.$store.dispatch('resetPassword',this.accountData)
     },
   }
 }
