@@ -21,7 +21,6 @@ import anuncioPagamento from "../components/home/paymentAnnouncement"
 
 export default {
     components:{
-        
         banner,
         anuncio,
         livesAtivas,
@@ -29,7 +28,10 @@ export default {
         livesDesabilitadas,
         registroEmail,
         anuncioPagamento
-    }
+    },
+    created() {
+        this.$store.commit('VISIBLE');
+    },
 }
 </script>
 

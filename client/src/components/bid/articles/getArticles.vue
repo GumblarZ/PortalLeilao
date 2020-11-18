@@ -6,10 +6,6 @@
 			justify="center"
 			align="center">
 				<v-card-actions justify="end">
-					<v-spacer></v-spacer>
-					<v-btn>Próximo</v-btn>
-					<v-btn>Anterior</v-btn>
-					<v-btn>Voltar</v-btn> 
 				</v-card-actions>
 				<v-carousel
 				cycle
@@ -18,12 +14,13 @@
 				>
 					<v-carousel-item
 					v-for="img in artigo.imgUrl"
-					height="50%"
+					max-height="500px"
+					width="100%"
 					:key="img">
-						<v-img
-						:src="img">
+					<v-zoom :img="img" :width="width">
 							<v-card-title float="left" v-text="artigo.name"/>
-						</v-img>
+						</v-zoom>
+						
 					</v-carousel-item>
 				</v-carousel>           
 				<v-card-text
@@ -41,63 +38,72 @@
 						{{vendedor.value}} (Nota do vendedor)
 					</strong>
 					<v-spacer/>
-					<strong>visitas:<small>25</small></strong>
+					<strong>
+						visitas:
+						<small>
+							25
+						</small>
+					</strong>
 					<v-spacer/>
-					<strong>Descrição:<small>{{ artigo.description }}</small></strong>
+					<strong>
+						Descrição:
+						<small>
+							{{ artigo.description }}
+						</small>
+					</strong>
 					<v-spacer/>
-					<strong>Local:<small>Rio de Janeiro</small></strong>
+					<strong>
+						Local:
+						<small>
+							Rio de Janeiro
+						</small>
+					</strong>
 					<v-spacer/>
-					<strong>Dia dos Leilão:<small>{{ artigo.date }}</small></strong>
+					<strong>
+						Dia dos Leilão:
+						<small>
+							{{ artigo.date }}
+						</small>
+					</strong>
 					<v-spacer/>
-					<strong>Lance Inicial:<small>{{ "R$ " + artigo.initialBid + ",00"}}</small></strong>
+					<strong>
+						Lance Inicial:
+						<small>
+							{{ formatacao(artigo.initialBid)}}
+						</small>
+					</strong>
 				</v-card-text>
 				<!-- abertura e fachamento de leilao beta -->
-				
 			</v-card>
-		</v-row>
-		<v-row class="mt-5">
-			<v-card-text v-if="artigo.active == false" class="red text-center">
-					<span class="white--text">Leilao Fechado</span>
-			</v-card-text>
-			<v-card-text v-else>
-				<lance
-					align="center"
-				/>	
-			</v-card-text>	
 		</v-row>
 	</v-container>	
 </template>
 <script>
-import lance from "./InputArticlesBid";
-import axios from 'axios';
+import { mapState} from "vuex";
+import vZoom from 'vue-zoom';
 export default {
-	components:{
-		lance
-	},
+	components: {vZoom},
 	data(){
-		return{		
-			// teste botao de abrir leilao
-			
-			artigo: {},
+		return{
 			vendedor: {
 				value: 5
-			}			
+			},
+			width: 500			
 		};
 	},
-
-	created() {
-		axios({
-			method:`post`,
-			url:'https://us-central1-portalleilao-26290.cloudfunctions.net/item/getItemById',
-			data:{id:'A5zfqb6in8HoIm99CMmt'},
+	computed: {
+		...mapState({
+			artigo: state => state.itemApp.item,
 		})
-		.then(response => {
-				this.artigo = response.data
-			})
-		.catch(error => console.log(error));
 	},
-	
 	methods: {
-	}   
+		formatacao(initialBid){
+			if(initialBid){
+				return "R$"+initialBid+",00"
+			}else{
+				return "R$00,00"
+			}
+		}
+	},
 }
 </script>

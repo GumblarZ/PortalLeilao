@@ -1,125 +1,77 @@
 <template>
     <v-main>
-        <v-row  justify="center">
-            <v-window
-                width="100%"
-                align="center"
-                v-model="step">
-                {{this.$store.getters.user}}
-                <!--fase 1-->
-                <v-window-item :value="1">
-                    <v-card max-width="30%" min-width="450" class="mb-12 pa-12"  :elevation="10" width="50%" >
-                    <user titulo="Cadastre-se com..."
-                    @email="getAccountData"
-                    />
-                    </v-card>
-                </v-window-item>
-                <!--fase 2-->
-                <v-window-item :value="2">
-                    <v-card max-width="30%" min-width="450" class="mb-12 pa-12"  :elevation="10" width="50%" >
-                        <personal
-                        @data="getPersonalData"/>
-                    </v-card>
-                </v-window-item>
-                <!--fase 3-->
-                <v-window-item :value="3">
-                    <v-card max-width="30%" min-width="450" class="mb-12 pa-12"  :elevation="10" width="50%" >
-                        <Address/>
-                    </v-card>
-                </v-window-item>
-                <!--Button-->
-                <v-row align="end" justify="center">
-                    <v-card-actions>
-                        <!--back to home-->
-                        <v-btn
-                        text
-                        large
-                        depressed
-                        color="#422321"
-                        to="/"
-                        v-if="step === 1"
-                        >
-                    
-                            voltar
-                        </v-btn>
-                        <!--back to item-->
-                        <v-btn
-                        text
-                        large
-                        depressed
-                        color="#422321"
-                        @click="step--"
-                        v-if="step != 1">
-                            voltar
-                        </v-btn>
-                        <v-spacer/>
-                        <!--next-->
-                        <v-btn
-                        color="#422321"
-                        class="white--text"
-                        depressed
-                        large
-                        v-if="step != 3"
-                        @click="clique()">
-                            Proximo
-                        </v-btn>
-                        <!--next page-->
-                        <v-btn
-                        color="#422321"
-                        class="white--text"
-                        depressed
-                        large
-                        v-if="step === 3"
-                        to="/"
-                        >
-                            Finalizar
-                        </v-btn>   
-                    </v-card-actions>
-                </v-row>
-            </v-window>  
-        </v-row>
+        <v-card flat min-height="700px" class="mt-12">
+            <v-row justify="center">
+                <v-window
+                v-model="step"
+                :touchless="true"
+                >
+                    <!--Primeira fase-->
+                    <v-window-item :value="0">
+                            <v-card
+                            class="mb-12 pa-8"  
+                            :elevation="10"
+                            min-width="500px"
+                            >
+                                <!--Titulo-->
+                                <v-row justify="center" class="pa-8">
+                                    <h1 class="brown--text">Cadastre-se</h1>
+                                </v-row>
+                                <!--Email's Validação-->
+                                <formulario/>
+                                    <v-row align="center">
+                                        <v-divider class="mx-10"/>
+                                            <h4 class="brown--text">ou</h4>
+                                        <v-divider class="mx-10" />
+                                    </v-row>
+                                <v-col cols="12">
+                                    <primeiroStep/>
+                                </v-col>   
+                            </v-card>
+                    </v-window-item>
+                    <!--Segunda fase-->
+                    <v-window-item :value="1">
+                        <segundoStep/>
+                    </v-window-item>
+                    <!--Terceira fase-->
+                    <v-window-item :value="2">
+                        <terceiroStep/>
+                    </v-window-item>
+                </v-window>
+            </v-row>
+        </v-card>
     </v-main>
 </template>
 <script>
-import user from '../components/Modal/criarUsuario/formEmailSenha';
-import personal from '../components/Modal/criarUsuario/cadastrarDadosPessoais';
-import Address from '../components/Modal/endereco'
+import formulario from '../components/formularios/loginProvide'
+import primeiroStep from '../components/formularios/criarConta/login&senha'
+import segundoStep from '../components/formularios/criarConta/dadosPessoais'
+import terceiroStep from '../components/formularios/criarConta/endereco'
+import {mapState} from 'vuex'
 export default {
-    
     components:{
-        user,
-        personal,
-        Address
+        formulario,
+        primeiroStep,
+        segundoStep,
+        terceiroStep,
+        
     },
-    data() {
-        return{
-            personalData:{},
-            accountData:{},
-            step: 1,
-            UF: ['SP', 'RJ', 'MG', 'PR', 'MN'],            
+    computed: {
+        ...mapState({
+            step: state => state.stepApp.step
+        })
+    },
+    created() {
+        this.$store.commit('NOT_VISIBLE');
+    },
+    watch:{
+      user(value){
+          if(value !== null && value !== undefined){
+                this.signUp().then(
+                   this.$router.push('/')
+            )  
+          }
         }
     },
-
-    methods:{
-        getAccountData(accountData){
-            this.accountData = accountData
-                },
-        getPersonalData(personalData){
-            this.personalData = personalData
-        },
-        clique(){
-            if(this.step===2){
-                this.step++
-            }
-            if(this.step===1){
-                this.signUp().then(
-                    this.step++             
-                )
-            }
-        },
-        async signUp () {
-            await this.$store.dispatch('signUserUp', this.accountData)
-    }
-    }
 }
 </script>

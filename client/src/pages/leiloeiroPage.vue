@@ -2,23 +2,53 @@
   <v-app id="inspire">
     <v-row no-gutters>
       <navegacao
-      @pagina='mudaPage'
       />
+      {{page}}
       <v-col> 
-        <v-window v-model="page" >
-          <v-window-item :value="1" >
+        <v-window 
+        v-model="page" 
+        :touchless="true"
+        >
+          <v-window-item :value="0" >
+            <principalPage/>
+          </v-window-item>
+          <!-- item -->
+          <v-window-item :value="2" >
             <produtos/>
           </v-window-item>
-          <v-window-item :value="2">           
-            <addItem/>
-          </v-window-item>
-
-          <!-- leilao -->
-          <v-window-item :value="3">           
-            <addBid/>
+          <v-window-item :value="3">          
+            <addItem/>           
           </v-window-item>
           <v-window-item :value="4">           
+            <meusProdutos/>
+          </v-window-item>
+          <v-window-item :value="9">           
+            <updateItem/>
+          </v-window-item>
+          <v-window-item :value="10">           
+            <terminal/>
+          </v-window-item>
+          
+          <!-- leilao -->
+          <v-window-item :value="5">           
             <listBid/>
+          </v-window-item>
+          <v-window-item :value="6">           
+            <addBid/>
+          </v-window-item>
+          <v-window-item :value="7">           
+            <listMyBid/>
+          </v-window-item>
+          <v-window-item :value="11">           
+            <updateLeilao/>
+          </v-window-item>
+          <v-window-item :value="12">           
+            <mostrarLotes/>
+          </v-window-item>
+
+          <!-- mala direta -->
+          <v-window-item :value="8">           
+            <gestor/>
           </v-window-item>
         </v-window>
       </v-col>
@@ -29,29 +59,45 @@
 <script>
 import navegacao from "../components/leiloeiro/menu"
 import produtos from "../components/products/getItens"
-import addItem from  "../components/item/additem"
-import addBid from "../components/bid/addBid/inputBid"
 import listBid from "../components/bid/listbid"
+import listMyBid from "../components/bid/listMyBid"
+import principalPage from "../components/leiloeiro/principalPage"
 
+import addBid from "../pages/addLeilao"
+import addItem from  "../pages/adicionarItem"
+import meusProdutos from "../pages/meusProdutos"
+import gestor from "../pages/gestor"
+
+import updateItem from "../pages/updateItem"
+import updateLeilao from "../pages/updateLeilao"
+import terminal from "../pages/terminal"
+import mostrarLotes from "../pages/mostrarLotes"
+import { mapState } from 'vuex'
 
 export default {
   components:{
     navegacao,
     produtos,
+    meusProdutos,
+    listBid,
+    listMyBid,
     addItem,
     addBid,
-    listBid
+    principalPage,
+    gestor,
+    updateItem,
+    updateLeilao,
+    terminal,
+    mostrarLotes
   },
-  data(){
-    return{
-      page: 0,
-    }
+  computed: {
+    ...mapState({
+      page: state => state.stepApp.step
+    })
   },
-  methods:{
-    mudaPage(page){
-      this.page = page;
-    }
+  created() {
+    this.$store.commit('clearData');
+    this.$store.commit('VISIBLE');
   }
-
 }
 </script>

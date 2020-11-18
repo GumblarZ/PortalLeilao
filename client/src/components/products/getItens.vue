@@ -19,16 +19,16 @@
                     </div>
                         <v-divider class="mx-8"/>
                     <!--cards-->
-                    <v-row justify="space-around" >
+                    <v-row justify="space-around" no-gutters>
                         <v-card
                         :elevation='1'
-                        class="mt-6 mb-6"
+                        class="mt-6 mb-6 "
                         width="24%"
-                        max-width="300"                        v-for="card in card"
-                        :key="card.id">
+                        max-width="300"                        
+                        v-for="card in paginacao"
+                        :key="card.length ">
                             <v-img width="100%" height="300" :src="card.imgUrl[0]" 
-                            >    
-                            </v-img>
+                            />
                              <v-list-item-content class="ml-5">   
                                 <span :style="color(card.active)">{{status(card.active)}}</span>
                                     <v-list-item-title 
@@ -41,29 +41,33 @@
                                     >
                                         {{card.description}}
                                     </v-list-item>
-                                <v-divider class="mx-5" color="#EDE7E2"/>           
-                                <v-row 
-                                class="pt-6" 
-                                justify="center">
+                                <v-divider class="mx-5" color="#EDE7E2"/>
                                     <v-btn 
                                     outlined 
                                     rounded 
-                                    class="pr-12 pl-12" 
+                                    @click="leilao(card.id)"
                                     color="green">
                                         Ver Mais
-                                    </v-btn>                                  
-                                </v-row>
-                            </v-list-item-content>
+                                    </v-btn>
+                                    <v-row no-gutters>
+                                    <v-divider/>
+                                    </v-row>
+                            </v-list-item-content>                            
                         </v-card>
-                    </v-row>    
-                </v-col>
-            <!--paginaçao-->
+                    </v-row>
+                <v-pagination
+                    v-model="page"
+                    :length="pages"
+                    circle
+                    color="#422321"
+                />   
+            </v-col>
     </v-card>            
 </template>
 
 <script>
 import Resp from './responsivo/ProdutoResponsivo';
-import axios from 'axios';
+import {mapState} from "vuex";
 export default {
     components:{
         Resp,
@@ -71,19 +75,23 @@ export default {
     data(){
         return{
             pesquisar:null,
-            page:1,
             items:[],
-            card:[]
+            target:{},
+            porPagina: 8, 
+            page: 1,
         }
     },
-    created(){
-        axios({
-            method:'get',
-            url:'https://us-central1-portalleilao-26290.cloudfunctions.net/item/getAllItem'
-        }).then(doc => {
-            this.card = doc.data;
-        }).catch(error => console.log(error))     
-        
+    computed: {
+    ...mapState({
+      card: state => state.itemApp.items,
+      user: state => state.userApp.user,
+    }),
+        paginacao () {
+                return this.card.slice((this.page - 1) * this.porPagina, this.page * this.porPagina)
+            },
+        pages(){
+            return  Math.ceil(this.card.length / this.porPagina)  
+        }
     },
     methods:{
         status(status){
@@ -99,7 +107,15 @@ export default {
             }else{
                return "color:red" 
             }
-        }
+        },
+        leilao(id){
+            this.target = id
+            console.log("ativo "+ this.target)
+            this.$store.dispatch('getItemByID', this.target)
+            this.$store.dispatch('getLances',this.target)
+            this.$router.push({path:'/leilao', query:{id:this.target}})
+        },
+        
     },
 }
 </script>

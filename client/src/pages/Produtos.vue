@@ -8,13 +8,6 @@
                 </v-col>
             </v-row>
         </v-layout>
-        <v-pagination
-                    v-model="page"
-                    :length="6"
-                    circle
-                    color="#422321"
-                >
-            </v-pagination>
     </v-app>
 </template>      
 <script>
@@ -25,10 +18,8 @@ export default {
         Produtos,
         Menu
     },
-    data(){
-        return{
-            page:1
-        }
+    created(){
+        this.$store.commit('VISIBLE');
     }
 }
 </script>    
