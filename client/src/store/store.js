@@ -4,28 +4,28 @@ import Vuex from "vuex";
 import firebase from "firebase/app";
 
 //usuarios 
-import user from "./modules/users/user";
-import perfil from "./modules/users/perfil";
-import login from "./modules/users/login";
+import user from "./modules/Backend/users/user";
+import perfil from "./modules/Backend/users/perfil";
+import login from "./modules/Backend/users/login";
 
 //item
-import item from "./modules/items/item";
-import lances from "./modules/items/lances";
-import info from "./modules/items/info";
+import item from "./modules/Backend/items/item";
+import lances from "./modules/Backend/items/lances";
+import info from "./modules/Backend/items/info";
 
 //leilao
-import bid from "./modules/bids/bid";
-import bidManager from "./modules/bids/bidManager";
-import registro from "./modules/bids/registroLotes";
-
-
-//notificacoes 
-import alerts from "./modules/layout/snap_bar";
+import bid from "./modules/Backend/bids/bid";
+import bidManager from "./modules/Backend/bids/bidManager";
+import registro from "./modules/Backend/bids/registroLotes";
 
 //layout
-import step from "./modules/layout/steps";
-import navEfoter from "./modules/layout/nav&foter"
-import form from  "./modules/layout/forms"
+
+import form from  "./modules/Frontend/layout/forms"
+
+//action
+import navEfoter from "./modules/Frontend/actions/nav&foter"
+import alerts from "./modules/Frontend/actions/alerts";
+import step from "./modules/Frontend/actions/steps";
 
 //API
 import viaCep from "./modules/API/viaCep"

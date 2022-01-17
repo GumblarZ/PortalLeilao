@@ -1,3 +1,4 @@
+
 export default{
     state:{
         title: "brown--text text-center",

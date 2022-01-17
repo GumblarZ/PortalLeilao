@@ -33,7 +33,7 @@
                     </v-list-item>
                 <v-divider class="mx-5" color="#EDE7E2"/>
                     <v-btn outlined rounded @click="leilao(card.id)" color="green">
-                        Ver Mais
+                        gerenciar lote
                     </v-btn>
                     <v-btn outlined rounded class="pr-12 pl-12" color="red" @click="deletar(card)">
                         deletar
@@ -43,14 +43,7 @@
                     </v-btn>
                 <v-row no-gutters>
                     <v-divider/>
-                    <v-btn 
-                    class="pr-12 pl-12 mt-6" 
-                    color="blue" 
-                    text rounded
-                    @click="registra(card)"
-                    >
-                        Registra em leilao
-                    </v-btn>
+                   
                 </v-row>
                 </v-list-item-content>                            
                 </v-card>
